@@ -12,6 +12,8 @@ public class Main : MonoBehaviour
         // create default levels
         // levels is a grid that tells us what goes where
 
+
+        // instantiations
         // add puzzle to level
 
         // add enemy to level
