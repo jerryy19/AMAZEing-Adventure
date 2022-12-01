@@ -86,30 +86,30 @@ public class ArrowKeyGameScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!started) {
-            bool up = Input.GetKeyDown(KeyCode.UpArrow);
-            bool down = Input.GetKeyDown(KeyCode.DownArrow);
-            bool left = Input.GetKeyDown(KeyCode.LeftArrow);
-            bool right = Input.GetKeyDown(KeyCode.RightArrow);
+        bool up = Input.GetKeyDown(KeyCode.UpArrow);
+        bool down = Input.GetKeyDown(KeyCode.DownArrow);
+        bool left = Input.GetKeyDown(KeyCode.LeftArrow);
+        bool right = Input.GetKeyDown(KeyCode.RightArrow);
 
-            // if user clicked button
-            if (up || down || left || right) {
-                // if correct key, add to score, otherwise continue;
-                if (up && arrowsToPress[index].name == "up" || down && arrowsToPress[index].name == "down" || 
-                    left && arrowsToPress[index].name == "left" || right && arrowsToPress[index].name == "right") {
-                    score++;
-                    StartCoroutine(Flash(arrowsToPress[index], true));
-                } else {
-                    StartCoroutine(Flash(arrowsToPress[index], false));
-                }
-
-                index++;
+        // if user clicked button
+        if (up || down || left || right) {
+            // if correct key, add to score, otherwise continue;
+            if (up && arrowsToPress[index].name == "up" || down && arrowsToPress[index].name == "down" || 
+                left && arrowsToPress[index].name == "left" || right && arrowsToPress[index].name == "right") {
+                score++;
+                StartCoroutine(Flash(arrowsToPress[index], true));
+            } else {
+                StartCoroutine(Flash(arrowsToPress[index], false));
             }
 
-            if (index == 4) {
-                StartCoroutine(Delay());
-            }
-        } else {
+            index++;
+        }
+
+        if (index == 4) {
+            StartCoroutine(Delay());
+        }
+        
+        if (started) {
             Image i = gameObject.transform.GetChild(0).gameObject.GetComponent<Image>();
             i.fillAmount = elapsedTime / time;
             elapsedTime -= Time.deltaTime;
