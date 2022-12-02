@@ -11,7 +11,8 @@ public class Main : MonoBehaviour
 
         // create default levels
         // levels is a grid that tells us what goes where
-
+        Level l = new Level(16, 16);
+        l.createLevel();
 
         // instantiations
         // add puzzle to level

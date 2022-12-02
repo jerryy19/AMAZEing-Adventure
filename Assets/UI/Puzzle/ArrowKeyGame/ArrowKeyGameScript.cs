@@ -12,6 +12,7 @@ public class ArrowKeyGameScript : MonoBehaviour
 
     List<GameObject> arrowsToPress = new List<GameObject>();
     int index = 0;
+    int num_arrowKeys = 0;
     int score = 0;
 
     private Timer timer;
@@ -43,11 +44,11 @@ public class ArrowKeyGameScript : MonoBehaviour
     }
 
     void newGame() {
+
         foreach (GameObject o in arrowsToPress) {
             Destroy(o);
         }
         arrowsToPress.Clear();
-        index = 0;
 
         float start = -200.0f;
 
@@ -93,6 +94,7 @@ public class ArrowKeyGameScript : MonoBehaviour
 
         // if user clicked button
         if (up || down || left || right) {
+            if (index >= arrowsToPress.Count) return;
             // if correct key, add to score, otherwise continue;
             if (up && arrowsToPress[index].name == "up" || down && arrowsToPress[index].name == "down" || 
                 left && arrowsToPress[index].name == "left" || right && arrowsToPress[index].name == "right") {
@@ -103,10 +105,12 @@ public class ArrowKeyGameScript : MonoBehaviour
             }
 
             index++;
+            num_arrowKeys++;
         }
 
         if (index == 4) {
-            StartCoroutine(Delay());
+            index = 0;
+            StartCoroutine(newGameAndAnimation());
         }
         
         if (started) {
@@ -116,12 +120,11 @@ public class ArrowKeyGameScript : MonoBehaviour
         }
     }
 
-    // produces a bug where after you click the arrow key 4 times,
-    // it shows a randomization animation at the end. 
-    // we will call this a "feature"
-    IEnumerator Delay() {
-        yield return new WaitForSeconds(0.1f);
-        newGame();
+    IEnumerator newGameAndAnimation() {
+        for (int i = 0; i < 3; i++) {
+            yield return new WaitForSeconds(0.05f);
+            newGame();
+        }
     }
 
     IEnumerator Flash(GameObject o, bool correct) {
@@ -133,7 +136,8 @@ public class ArrowKeyGameScript : MonoBehaviour
         } else {
             o.GetComponent<Image>().color = new Color(1.0f, 0.0f, 0.0f);
         }
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
+        if (o == null) yield break;
         o.SetActive(false);
     }
 
@@ -151,15 +155,44 @@ public class ArrowKeyGameScript : MonoBehaviour
             }
 
             timer.set(time, () => {
+                // disable game and display result (success or failure)
                 gamePanel.SetActive(false);
                 resultsPanel.SetActive(true);
                 
                 GameObject o = new GameObject();
                 o.name = "resultText";
-                o.AddComponent<Text>().text = $"Score: {score}";
-                o.GetComponent<Text>().font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-                o.transform.SetParent(resultsPanel.transform, false);
+                o.AddComponent<RectTransform>();
+                o.GetComponent<RectTransform>().sizeDelta = new Vector2(400.0f, 100.0f);
+
+                // text itself
+                Text text = o.AddComponent<Text>();
+                text.GetComponent<Text>().font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+                text.fontSize = 60;
+                text.transform.SetParent(resultsPanel.transform, false);
+                text.alignment = TextAnchor.MiddleCenter;
+                
+                string successText = null;
+                if ((score >= 20 && (float)score / num_arrowKeys >= 0.70f)) {
+                    successText = "SUCCESS";
+                    text.color = new Color(0.0f, 1.0f, 0.0f);
+                } else {
+                    successText = "FAIL";
+                    text.color = new Color(1.0f, 0.0f, 0.0f);
+                }
+                text.GetComponent<Text>().text = successText;
+                Debug.Log($"score: {score}, arrows: {num_arrowKeys}");
+
+                // TODO: RETURN BACK TO MAZE GAME
+                // timer.set(3.0f, () => {
+                //     gameObject.SetActive(false);
+                // });
+
             });
+        }
+
+
+        // TODO: RETURN BACK TO MAZE GAME
+        if (i == 0) {
 
         }
     }
