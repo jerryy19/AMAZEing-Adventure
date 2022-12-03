@@ -191,7 +191,7 @@ public class Level {
         int wend = Random.Range(1, width - 2);
         int lend = length - 1;
         int end = wend * width + lend;
-
+        
         g.addVertex(start);
         gWall.addVertex(start);
         g.addVertex(end);
@@ -207,7 +207,7 @@ public class Level {
         g.addEdge(end - 1, end);
         gWall.addEdge(end - 1, end);
 
-        grid[wstart, wend] = new List<TileType>() { TileType.FLOOR };
+        grid[wstart, lstart] = new List<TileType>() { TileType.FLOOR };
         grid[wend, lend] = new List<TileType>() { TileType.FLOOR };
 
 
