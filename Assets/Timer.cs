@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/** A timer class to execute functions after time runs out
+
+How to use: Attach script to a gameObject, then create variable
+Timer t = GetComponent<Timer>();
+
+to use timer: 
+t.set(time, f); 
+where f is a function/delegate to execute after time runs out
+
+**/
+
 public class Timer : MonoBehaviour
 {
     public delegate void timerCallbackDelegate();

@@ -9,6 +9,7 @@ public enum PuzzleType
     MULTIPLICATION = 2,     // 1 digit
     NUMBER_MEMORY = 3,      // enter the 3 highest numbers you saw
     AIM_TRAINER = 4,        // click as many circles as you can
+    TYPING = 5
 
 }
 
