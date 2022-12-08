@@ -75,8 +75,9 @@ public class Main : MonoBehaviour
                     
 
                 }
-
-                o.transform.position = new Vector3(w * 10, 0, l * 10);
+                
+                o.transform.localScale -= new Vector3(0.8f, 0, 0.8f);
+                o.transform.position = new Vector3(w * 2, 0, l * 2);
                 o.name = $"({w}, {l})";
                 o.transform.SetParent(transform, false);
             }
