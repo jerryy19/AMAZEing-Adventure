@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Main : MonoBehaviour
 {
+    public GameObject bananaMan;
+    // Used for instantiating the different objects; each location is the center of a square
+    public Vector3[,] squareLocations;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +17,7 @@ public class Main : MonoBehaviour
         Level level = new Level(16, 16);
         level.createLevel();
         List<TileType>[,] grid = level.grid;
-
+        squareLocations = new Vector3[16, 16];
         visualizeLevel(grid, level);
 
         // instantiations
@@ -78,6 +81,11 @@ public class Main : MonoBehaviour
                 
                 o.transform.localScale -= new Vector3(0.8f, 0, 0.8f);
                 o.transform.position = new Vector3(w * 2, 0, l * 2);
+                squareLocations[w, l] = new Vector3(w * 2, 0, l * 2 + 1);
+                // TODO: Move this instantiation to Start or another method; just here for testing.
+                if (grid[w,l][0] == TileType.ENEMY)
+                    Instantiate(bananaMan, squareLocations[w, l], Quaternion.identity);
+                
                 o.name = $"({w}, {l})";
                 o.transform.SetParent(transform, false);
             }

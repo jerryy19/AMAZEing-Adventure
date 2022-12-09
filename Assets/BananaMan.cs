@@ -15,6 +15,7 @@ public class BananaMan : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         // Adding throw event to throw animation
         AddAnimationEvent("Throw", 0.816f, "ThrowBanana", 1);
 
