@@ -99,7 +99,7 @@ public class Level {
 
             success = BackTrackingSearch(grid, unassigned);
             if (!success) {
-                Debug.Log("Could not find valid solution - will try again");
+                // Debug.Log("Could not find valid solution - will try again");
                 unassigned.Clear();
                 grid = new List<TileType>[width, length];
                 function_calls = 0; 

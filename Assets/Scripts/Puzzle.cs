@@ -4,12 +4,11 @@ using UnityEngine;
 
 public enum PuzzleType
 {
-    ARROW_KEY = 0,          // click the arrow keys on keyboard that you see on screen
-    ADDITION = 1,           // 2 digits
-    MULTIPLICATION = 2,     // 1 digit
-    NUMBER_MEMORY = 3,      // enter the 3 highest numbers you saw
-    AIM_TRAINER = 4,        // click as many circles as you can
-    TYPING = 5
+    TYPING = 0,             // type the words you see on screen as fast as possible (timer)
+    SPELLING = 1,           // display word, then hide word and make them type it (variation) (timer)
+    WORD_MEMORY = 2,        // display 3 to 4 words on screen and have player type out all the words (timer)
+    FILL = 3,               // fill in the letters of the word
+    SCRAMBLE = 4            // unscramble the word
 
 }
 
