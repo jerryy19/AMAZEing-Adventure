@@ -28,6 +28,31 @@ public class Main : MonoBehaviour
 
     }
 
+    // TODO: WALL INSTANTIATIONS 
+    // void wallInstantiations() {
+    //         List<GameObject> plist = new List<GameObject>();
+
+    //     plist.AddRange(Resources.LoadAll<GameObject>("CityVoxelPack/Assets/buildings/medium/Prefabs"));
+
+    //     Bounds bounds = GetComponent<Collider>().bounds; 
+
+    //     GameObject exteriorWalls = Instantiate(plist[Random.Range(0, plist.Count-1)], new Vector3(0, 0, 0), Quaternion.identity);
+    //     GameObject o = exteriorWalls.transform.GetChild(0).gameObject;
+    //     o.AddComponent<MeshCollider>();
+    //     o.GetComponent<MeshCollider>().convex = true;
+    //     Bounds currentSize = o.GetComponent<Collider>().bounds;
+    //     // exteriorWalls.name = "exteriorWalls";
+    //     // exteriorWalls.transform.localScale = new Vector3(0.5f * bounds.size[0], 1.0f, 0.5f * bounds.size[2]);
+        
+    //     float newSizeRatioX = bounds.size.x / currentSize.size.x;
+    //     float newSizeRatioZ = bounds.size.z / currentSize.size.z;
+
+    //     float minimumNewSizeRatio = Mathf.Min(newSizeRatioX, newSizeRatioZ);
+
+    //     Vector3 newScale = new Vector3(exteriorWalls.transform.localScale.x * minimumNewSizeRatio, exteriorWalls.transform.localScale.y, exteriorWalls.transform.localScale.z * minimumNewSizeRatio);
+    //     exteriorWalls.transform.localScale = newScale;
+    // }
+
     // TEMPORARY FUNCTION TO SEE THE LEVEL DESIGN
     void visualizeLevel(List<TileType>[,] grid, Level level) {
         Color floor = new Color(1f, 1f, 1f);        // white
