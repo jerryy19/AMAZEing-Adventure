@@ -5,8 +5,8 @@ using UnityEngine;
 public enum PuzzleType
 {
     TYPING = 0,             // type the words you see on screen as fast as possible (timer)
-    SPELLING = 1,           // display word, then hide word and make them type it (variation) (timer)
-    WORD_MEMORY = 2,        // display 3 to 4 words on screen and have player type out all the words (timer)
+    WORD_MEMORY = 1,        // display 3 to 4 words on screen and have player type out all the words (timer)
+    FOURDLE = 2,            // wordle but with 4 letter words
     FILL = 3,               // fill in the letters of the word
     SCRAMBLE = 4            // unscramble the word
 

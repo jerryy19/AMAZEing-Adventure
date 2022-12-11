@@ -38,7 +38,7 @@ public class TypingGameScript : MonoBehaviour
         using (StreamReader sr = File.OpenText("./Assets/UI/Puzzles/wordBank.txt")) {
             string s = "";
             while ((s = sr.ReadLine()) != null) {
-                words.Add(s);
+                words.Add(s.ToUpper());
             }
         }
 
@@ -65,8 +65,8 @@ public class TypingGameScript : MonoBehaviour
 
         for (int i = 0; i < 4; i++) {
             GameObject o = Instantiate(letterPrefab, new Vector3(0, 0, 0), Quaternion.identity, gamePanel.transform);
-            o.name = $"{word[i]}".ToUpper();
-            o.transform.GetChild(0).gameObject.GetComponent<Text>().text = $"{word[i]}".ToUpper();
+            o.name = $"{word[i]}";
+            o.transform.GetChild(0).gameObject.GetComponent<Text>().text = o.name;
 
             RectTransform pos = o.GetComponent<RectTransform>();
             pos.anchoredPosition = new Vector2(start + 75, 0);
