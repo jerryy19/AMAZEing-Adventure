@@ -11,12 +11,9 @@ public class BananaMan : MonoBehaviour
     public Transform hand;
     public Animator animator;
 
-    public bool isPinkActive;
-
     // Start is called before the first frame update
     void Start()
     {
-        isPinkActive = false;
         level = GameObject.Find("Level");
         animator = GetComponent<Animator>();
         // Adding throw event to throw animation
@@ -29,16 +26,11 @@ public class BananaMan : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            isPinkActive = true;
             animator.SetBool("isIdle", false);
             animator.SetBool("isWalking", false);
             animator.SetBool("isThrowing", true);
         }
-
-        if (isPinkActive)
-        {
-            
-        }
+        
     }
 
     private void ThrowBanana()

@@ -1,13 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class Main : MonoBehaviour
 {
     public GameObject bananaMan;
+    
+    // TODO: Maybe move this stuff to another script?
+    [System.Serializable]
+    public struct RenderFeatureToggle
+    {
+        public ScriptableRendererFeature feature;
+        public bool isEnabled;
+    }
+    [SerializeField]
+    private List<RenderFeatureToggle> renderFeatures = new List<RenderFeatureToggle>();
+    [SerializeField]
+    private UniversalRenderPipelineAsset pipelineAsset;
+    
     // Used for instantiating the different objects; each location is the center of a square
     public Vector3[,] squareLocations;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +37,7 @@ public class Main : MonoBehaviour
         squareLocations = new Vector3[16, 16];
         visualizeLevel(grid, level);
 
+        
         // instantiations
         // add puzzle to level
 
@@ -132,6 +150,15 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.P))
+        {
+            renderFeatures[0].feature.SetActive(true);
+        }
+        else
+        {
+            renderFeatures[0].feature.SetActive(false);
+        }
+        
         // player movement in another script
         // enemy movement in another script
         // menu/tutorial scene stuff?
