@@ -25,12 +25,12 @@ public class BananaMan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            animator.SetBool("isIdle", false);
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isThrowing", true);
-        }    
+        // if (Input.GetKey(KeyCode.Space))
+        // {
+        //     animator.SetBool("isIdle", false);
+        //     animator.SetBool("isWalking", false);
+        //     animator.SetBool("isThrowing", true);
+        // }    
     }
 
     private void ThrowBanana()
