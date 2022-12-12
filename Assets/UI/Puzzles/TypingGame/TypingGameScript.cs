@@ -12,7 +12,7 @@ public class TypingGameScript : MonoBehaviour
     int index = 0;
     int correctLetters = 0;
     int num_words = 0;
-    List<string> words = new List<string>();
+    List<string> words = new List<string>();        // our word bank
 
     private Timer timer;
     float time = 10.0f;
@@ -27,7 +27,7 @@ public class TypingGameScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timePanel = gameObject.transform.GetChild(0).gameObject;            
+        timePanel = gameObject.transform.GetChild(0).gameObject;
         instructionsPanel = gameObject.transform.GetChild(1).gameObject;
         gamePanel = gameObject.transform.GetChild(2).gameObject;
         resultsPanel = gameObject.transform.GetChild(3).gameObject;
@@ -61,7 +61,7 @@ public class TypingGameScript : MonoBehaviour
         float start = -200.0f;      // positioning in GUI
 
         // choose a random 4 letter word
-        string word = words[Random.Range(0, words.Count - 1)];
+        string word = words[Random.Range(0, words.Count)];
 
         for (int i = 0; i < 4; i++) {
             GameObject o = Instantiate(letterPrefab, new Vector3(0, 0, 0), Quaternion.identity, gamePanel.transform);
@@ -127,6 +127,7 @@ public class TypingGameScript : MonoBehaviour
     IEnumerator Flash(GameObject o, bool correct) {
         if (o == null) yield break;
 
+        // color to change it
         if (correct) {
             o.GetComponent<Image>().color = new Color(0.0f, 1.0f, 0.0f);
         } else {
@@ -135,6 +136,7 @@ public class TypingGameScript : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         if (o == null) yield break;
 
+        // color to change back or disable
         if (correct) {
             o.SetActive(false);
         } else {
@@ -175,6 +177,7 @@ public class TypingGameScript : MonoBehaviour
                 text.transform.SetParent(resultsPanel.transform, false);
                 text.alignment = TextAnchor.MiddleCenter;
                 
+                // success conditions
                 string successText = null;
                 if ((float)correctLetters / (num_words * 4) >= 0.70f) {
                     successText = "SUCCESS";

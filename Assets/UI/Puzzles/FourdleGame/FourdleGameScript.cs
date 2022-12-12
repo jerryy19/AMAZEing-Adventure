@@ -8,8 +8,8 @@ public class FourdleGameScript : MonoBehaviour
 {
     public GameObject letterPrefab;
 
-    List<string> words = new List<string>();
-    List<GameObject>[] wordInRow = new List<GameObject>[5];
+    List<string> words = new List<string>();                    // our word bank
+    List<GameObject>[] wordInRow = new List<GameObject>[5];     // letter outline ui
 
     private Timer timer;
     string theWord;
@@ -36,6 +36,7 @@ public class FourdleGameScript : MonoBehaviour
             }
         }
 
+        // initialize the list for letter outline on UI 
         for (int i = 0; i < 5; i++) {
             wordInRow[i] = new List<GameObject>();
         }
@@ -59,7 +60,7 @@ public class FourdleGameScript : MonoBehaviour
         title.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
 
         // choose a random 4 letter word
-        theWord = words[Random.Range(0, words.Count - 1)];
+        theWord = words[Random.Range(0, words.Count)];
 
         float s = 40.0f;          // change the size of prefab to this
 
@@ -68,12 +69,11 @@ public class FourdleGameScript : MonoBehaviour
             float hor = -100.0f;      // positioning in GUI
             for (int i = 0; i < 4; i++) {
                 GameObject o = Instantiate(letterPrefab, new Vector3(0, 0, 0), Quaternion.identity, gamePanel.transform);
-                // o.transform.localScale
                 o.name = $"{(row, i)}";
                 o.transform.GetChild(0).gameObject.GetComponent<Text>().text = "";
 
                 RectTransform pos = o.GetComponent<RectTransform>();
-                pos.sizeDelta = new Vector2(s, s);
+                pos.sizeDelta = new Vector2(s, s);      // change size of prefab
                 pos.anchoredPosition = new Vector2(hor + s, vert);
                 hor += s + 3;
 
@@ -189,10 +189,8 @@ public class FourdleGameScript : MonoBehaviour
                     currentCol = 0;
                 }
 
-
             }
         }
-        
     }
 
 
