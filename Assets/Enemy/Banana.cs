@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Banana : MonoBehaviour
 {
-    public Rigidbody rigidbody;
+    public new Rigidbody rigidbody;
     // Start is called before the first frame update
     void Start()
     {
         rigidbody.AddForce(transform.up * 100f);
+        StartCoroutine("Countdown");
     }
 
     // Update is called once per frame
@@ -18,5 +19,9 @@ public class Banana : MonoBehaviour
         
     }
 
-
+    IEnumerator Countdown()
+    {
+        yield return new WaitForSeconds(1.2f);
+        Destroy(transform.gameObject);
+    }
 }

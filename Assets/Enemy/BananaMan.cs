@@ -7,30 +7,38 @@ using UnityEngine;
 public class BananaMan : MonoBehaviour
 {
     public GameObject banana;
+    public GameObject level;
     public Transform hand;
     public Animator animator;
-    
 
+    public bool isPinkActive;
 
     // Start is called before the first frame update
     void Start()
     {
+        isPinkActive = false;
+        level = GameObject.Find("Level");
         animator = GetComponent<Animator>();
         // Adding throw event to throw animation
         AddAnimationEvent("Throw", 0.816f, "ThrowBanana", 1);
-
     }
     
 
     // Update is called once per frame
     void Update()
     {
-        // if (Input.GetKey(KeyCode.Space))
-        // {
-        //     animator.SetBool("isIdle", false);
-        //     animator.SetBool("isWalking", false);
-        //     animator.SetBool("isThrowing", true);
-        // }    
+        if (Input.GetKey(KeyCode.Space))
+        {
+            isPinkActive = true;
+            animator.SetBool("isIdle", false);
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isThrowing", true);
+        }
+
+        if (isPinkActive)
+        {
+            
+        }
     }
 
     private void ThrowBanana()
