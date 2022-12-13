@@ -8,8 +8,7 @@ How to use: Attach script to a gameObject, then create variable
 Timer t = GetComponent<Timer>();
 
 to use timer: 
-t.set(time, f); 
-where f is a function/delegate to execute after time runs out
+t.set(time, () => { what you want do do after time}); 
 
 **/
 
