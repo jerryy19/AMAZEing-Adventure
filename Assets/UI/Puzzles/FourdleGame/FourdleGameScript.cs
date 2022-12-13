@@ -15,6 +15,9 @@ public class FourdleGameScript : MonoBehaviour
     string theWord;
     int currentRow = 0;
     int currentCol = 0;
+    
+    public bool done = false;
+    public bool success = false;
 
     GameObject instructionsPanel;
     GameObject gamePanel;
@@ -152,6 +155,7 @@ public class FourdleGameScript : MonoBehaviour
 
                     // if guess is correct
                     if (playerWord == theWord || currentRow == 4) {
+                        done = true;
                         gamePanel.gameObject.SetActive(false);
                         resultsPanel.gameObject.SetActive(true);
                         GameObject o = new GameObject();
@@ -169,6 +173,7 @@ public class FourdleGameScript : MonoBehaviour
                         string successText = null;
 
                         if (playerWord == theWord) {
+                            success = true;
                             successText = "SUCCESS";
                             text.color = new Color(0.0f, 1.0f, 0.0f);
                         } else {

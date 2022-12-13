@@ -19,11 +19,13 @@ public class WordMemoryGameScript : MonoBehaviour
     float time = 10.0f;
     bool started = false;
     bool guessPhase = false;
-    bool done = false;
     float elapsedTime;
     int currentRow = 0;
     int currentCol = 0;
     int correct = 0;
+
+    public bool done = false;
+    public bool success = false;
 
     GameObject timePanel;
     GameObject instructionsPanel;
@@ -141,6 +143,7 @@ public class WordMemoryGameScript : MonoBehaviour
             
             string successText = null;
             if (correct == numWords) {
+                success = true;
                 successText = "SUCCESS";
                 text.color = new Color(0.0f, 1.0f, 0.0f);
             } else {

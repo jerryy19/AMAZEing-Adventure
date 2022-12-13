@@ -14,27 +14,95 @@ public enum PuzzleType
 
 public class Puzzle : MonoBehaviour
 {
-    
-    public GameObject puzzleTemplatePrefab;
+    public GameObject typingPrefab;
+    public GameObject wordPrefab;
+    public GameObject fourdlePrefab;
+    public GameObject fillPrefab;
+    public GameObject scramblePrefab;
 
-    public GameObject createPuzzle() {
-        int puzzleType = Random.Range(0, System.Enum.GetNames(typeof(PuzzleType)).Length - 1);
-        return createPuzzle(puzzleType);
+    public int num_puzzlesTypes = 5;
+    public PuzzleType puzzleType;
+    GameObject p = null;
+
+    public bool done;           // did user finish puzzle (success or fail)
+    public bool success;        // did user succeed in solving puzzle
+    public bool interactable;   // if succeed in solving puzzle, then this puzzle is no longer interactable
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        done = false;
+        success = false;
+        interactable = true;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        switch (puzzleType) {
+            case PuzzleType.TYPING: 
+                done = p.GetComponent<TypingGameScript>().done;
+                success = p.GetComponent<TypingGameScript>().success;
+                break;
+            case PuzzleType.WORD_MEMORY:
+                done = p.GetComponent<WordMemoryGameScript>().done;
+                success = p.GetComponent<WordMemoryGameScript>().success;
+                break;
+            case PuzzleType.FOURDLE:
+                done = p.GetComponent<FourdleGameScript>().done;
+                success = p.GetComponent<FourdleGameScript>().success;
+                break;
+            case PuzzleType.FILL:
+                done = p.GetComponent<FillGameScript>().done;
+                success = p.GetComponent<FillGameScript>().success;
+                break;
+            case PuzzleType.SCRAMBLE:
+                done = p.GetComponent<ScrambleGameScript>().done;
+                success = p.GetComponent<ScrambleGameScript>().success;
+                break;
+        }
+        
+        if (done && success) {
+            interactable = false;
+
+            // TODO: maybe animations to show success
+        }
+    }
+
+
+    public void createPuzzle() {
+        puzzleType = (PuzzleType) Random.Range(0, num_puzzlesTypes);
+        createPuzzle(puzzleType);
     }
     
-    public GameObject createPuzzle(int puzzleType) {
-        GameObject p = Instantiate(puzzleTemplatePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+    public void createPuzzle(PuzzleType puzzleType) {
+        done = false;
+        success = false;
+        switch (puzzleType) {
+            case PuzzleType.TYPING: 
+                p = Instantiate(typingPrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                break;
+            case PuzzleType.WORD_MEMORY:
+                p = Instantiate(wordPrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                break;
+            case PuzzleType.FOURDLE:
+                p = Instantiate(fourdlePrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                break;
+            case PuzzleType.FILL:
+                p = Instantiate(fillPrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                break;
+            case PuzzleType.SCRAMBLE:
+                p = Instantiate(scramblePrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                break;
+        }
+
         p.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
-        // p.transform.localScale = new Vector3(1, 1, 1);
         p.SetActive(false);
 
-        // TODO: create the puzzle types
-
-        return p;
     }
 
-    // displays puzzle on screen
-    public void display(GameObject p) {
+    // play puzzle on screen
+    public void play() {
         p.SetActive(true);
     }
 }

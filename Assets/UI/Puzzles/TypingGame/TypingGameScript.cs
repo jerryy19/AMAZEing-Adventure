@@ -19,6 +19,9 @@ public class TypingGameScript : MonoBehaviour
     bool started = false;
     float elapsedTime;
 
+    public bool done = false;
+    public bool success = false;
+
     GameObject timePanel;
     GameObject instructionsPanel;
     GameObject gamePanel;
@@ -161,6 +164,7 @@ public class TypingGameScript : MonoBehaviour
             }
 
             timer.set(time, () => {
+                done = true;
                 // disable game and display result (success or failure)
                 gamePanel.SetActive(false);
                 resultsPanel.SetActive(true);
@@ -180,6 +184,7 @@ public class TypingGameScript : MonoBehaviour
                 // success conditions
                 string successText = null;
                 if ((float)correctLetters / (num_words * 4) >= 0.70f) {
+                    success = true;
                     successText = "SUCCESS";
                     text.color = new Color(0.0f, 1.0f, 0.0f);
                 } else {

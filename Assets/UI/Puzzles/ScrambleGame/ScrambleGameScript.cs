@@ -17,8 +17,9 @@ public class ScrambleGameScript : MonoBehaviour
     int tries = 3;
     int currentIndex = 0;
     string scrambledWord;
-    bool success = false;
-    bool done = false;
+    
+    public bool done = false;
+    public bool success = false;
 
     GameObject triesObj;
     
