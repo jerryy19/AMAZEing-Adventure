@@ -18,6 +18,8 @@ public class ScrambleGameScript : MonoBehaviour
     int currentIndex = 0;
     string scrambledWord;
     bool success = false;
+    bool done = false;
+
     GameObject triesObj;
     
     GameObject instructionsPanel;
@@ -102,19 +104,20 @@ public class ScrambleGameScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (success || tries == 0) {
+        if (!done && (success || tries == 0)) {
+            done = true;
             gamePanel.gameObject.SetActive(false);
             resultsPanel.gameObject.SetActive(true);
             GameObject o = new GameObject();
             o.name = "resultText";
             o.AddComponent<RectTransform>();
             o.GetComponent<RectTransform>().sizeDelta = new Vector2(400.0f, 100.0f);
+            o.transform.SetParent(resultsPanel.transform, false);
 
             // text itself
             Text text = o.AddComponent<Text>();
             text.GetComponent<Text>().font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
             text.fontSize = 60;
-            text.transform.SetParent(resultsPanel.transform, false);
             text.alignment = TextAnchor.MiddleCenter;
             
             string successText = null;
@@ -125,15 +128,27 @@ public class ScrambleGameScript : MonoBehaviour
             } else {
                 successText = "FAIL";
                 text.color = new Color(1.0f, 0.0f, 0.0f);
+
+                GameObject actualWord = new GameObject();
+                actualWord.name = "actualWordText";
+                actualWord.AddComponent<RectTransform>();
+                actualWord.GetComponent<RectTransform>().sizeDelta = new Vector2(400.0f, 100.0f);
+                actualWord.transform.SetParent(resultsPanel.transform, false);
+
+                // text itself
+                Text text2 = actualWord.AddComponent<Text>();
+                text2.GetComponent<Text>().font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+                text2.fontSize = 20;
+                text2.alignment = TextAnchor.LowerCenter;
+                text2.GetComponent<Text>().text = $"Word: {theWord}";
             }
 
             text.GetComponent<Text>().text = successText;
 
-            // TODO: RETURN BACK TO MAZE GAME
+            // disable after some time
             timer.set(3.0f, () => {
-                // gameObject.SetActive(false);
+                gameObject.SetActive(false);
             });
-            return;
         }
     }
 
@@ -216,9 +231,6 @@ public class ScrambleGameScript : MonoBehaviour
             createGame();
         }
 
-        // TODO: RETURN BACK TO MAZE GAME
-        if (i == 0) {
-
-        }
+        if (i == 0) gameObject.SetActive(false);
     }
 }

@@ -158,12 +158,12 @@ public class FourdleGameScript : MonoBehaviour
                         o.name = "resultText";
                         o.AddComponent<RectTransform>();
                         o.GetComponent<RectTransform>().sizeDelta = new Vector2(400.0f, 100.0f);
+                        o.transform.SetParent(resultsPanel.transform, false);
 
                         // text itself
                         Text text = o.AddComponent<Text>();
                         text.GetComponent<Text>().font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
                         text.fontSize = 60;
-                        text.transform.SetParent(resultsPanel.transform, false);
                         text.alignment = TextAnchor.MiddleCenter;
                         
                         string successText = null;
@@ -174,15 +174,27 @@ public class FourdleGameScript : MonoBehaviour
                         } else {
                             successText = "FAIL";
                             text.color = new Color(1.0f, 0.0f, 0.0f);
+
+                            GameObject actualWord = new GameObject();
+                            actualWord.name = "actualWordText";
+                            actualWord.AddComponent<RectTransform>();
+                            actualWord.GetComponent<RectTransform>().sizeDelta = new Vector2(400.0f, 100.0f);
+                            actualWord.transform.SetParent(resultsPanel.transform, false);
+
+                            // text itself
+                            Text text2 = actualWord.AddComponent<Text>();
+                            text2.GetComponent<Text>().font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+                            text2.fontSize = 20;
+                            text2.alignment = TextAnchor.LowerCenter;
+                            text2.GetComponent<Text>().text = $"Word: {theWord}";
                         }
 
                         text.GetComponent<Text>().text = successText;
 
-                        // TODO: RETURN BACK TO MAZE GAME
+                        // disable after some time
                         timer.set(3.0f, () => {
-                            // gameObject.SetActive(false);
+                            gameObject.SetActive(false);
                         });
-                        return;
                     }
 
                     currentRow++;
@@ -203,10 +215,7 @@ public class FourdleGameScript : MonoBehaviour
             gamePanel.gameObject.SetActive(true);
         }
 
-        // TODO: RETURN BACK TO MAZE GAME
-        if (i == 0) {
-
-        }
+        if (i == 0) gameObject.SetActive(false);
     }
 
 

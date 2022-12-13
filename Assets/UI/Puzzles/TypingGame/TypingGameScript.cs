@@ -169,12 +169,12 @@ public class TypingGameScript : MonoBehaviour
                 o.name = "resultText";
                 o.AddComponent<RectTransform>();
                 o.GetComponent<RectTransform>().sizeDelta = new Vector2(400.0f, 100.0f);
+                o.transform.SetParent(resultsPanel.transform, false);
 
                 // text itself
                 Text text = o.AddComponent<Text>();
                 text.GetComponent<Text>().font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
                 text.fontSize = 60;
-                text.transform.SetParent(resultsPanel.transform, false);
                 text.alignment = TextAnchor.MiddleCenter;
                 
                 // success conditions
@@ -187,21 +187,16 @@ public class TypingGameScript : MonoBehaviour
                     text.color = new Color(1.0f, 0.0f, 0.0f);
                 }
                 text.GetComponent<Text>().text = successText;
-                // Debug.Log($"score: {score}, arrows: {num}");
 
-                // TODO: RETURN BACK TO MAZE GAME
+                // disable after some time
                 timer.set(3.0f, () => {
-                    // gameObject.SetActive(false);
+                    gameObject.SetActive(false);
                 });
 
             });
         }
 
-
-        // TODO: RETURN BACK TO MAZE GAME
-        if (i == 0) {
-
-        }
+        if (i == 0) gameObject.SetActive(false);
     }
 
 

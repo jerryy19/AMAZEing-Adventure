@@ -12,12 +12,14 @@ public class WordMemoryGameScript : MonoBehaviour
     List<string> words = new List<string>();                    // our word bank
     List<GameObject>[] wordInRow = new List<GameObject>[5];     // letter outline ui
     List<string> toRemember = new List<string>();               // words to remember for player
+    List<string> toRememberTemp = new List<string>();               // words to remember for player
     int numWords;      // choose this many words to memorize
 
     private Timer timer;
     float time = 10.0f;
     bool started = false;
     bool guessPhase = false;
+    bool done = false;
     float elapsedTime;
     int currentRow = 0;
     int currentCol = 0;
@@ -66,6 +68,7 @@ public class WordMemoryGameScript : MonoBehaviour
                 temp--;
             }
         }
+        toRememberTemp.AddRange(toRemember);
 
         // GameObject o = Instantiate(letterPrefab, new Vector3(0, 0, 0), Quaternion.identity, gamePanel.transform);
         GameObject toRememberWordsUI = new GameObject();
@@ -117,7 +120,8 @@ public class WordMemoryGameScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (correct == numWords || (guessPhase && elapsedTime <= 0)) {
+        if (!done && (correct == numWords || (guessPhase && elapsedTime <= 0))) {
+            done = true;
             // disable game and display result (success or failure)
             timePanel.SetActive(false);
             gamePanel.SetActive(false);
@@ -127,12 +131,12 @@ public class WordMemoryGameScript : MonoBehaviour
             o.name = "resultText";
             o.AddComponent<RectTransform>();
             o.GetComponent<RectTransform>().sizeDelta = new Vector2(400.0f, 100.0f);
+            o.transform.SetParent(resultsPanel.transform, false);
 
             // text itself
             Text text = o.AddComponent<Text>();
             text.GetComponent<Text>().font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
             text.fontSize = 60;
-            text.transform.SetParent(resultsPanel.transform, false);
             text.alignment = TextAnchor.MiddleCenter;
             
             string successText = null;
@@ -142,12 +146,25 @@ public class WordMemoryGameScript : MonoBehaviour
             } else {
                 successText = "FAIL";
                 text.color = new Color(1.0f, 0.0f, 0.0f);
+
+                GameObject actualWord = new GameObject();
+                actualWord.name = "actualWordsText";
+                actualWord.AddComponent<RectTransform>();
+                actualWord.GetComponent<RectTransform>().sizeDelta = new Vector2(400.0f, 100.0f);
+                actualWord.transform.SetParent(resultsPanel.transform, false);
+
+                // text itself
+                Text text2 = actualWord.AddComponent<Text>();
+                text2.GetComponent<Text>().font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+                text2.fontSize = 20;
+                text2.alignment = TextAnchor.LowerCenter;
+                text2.GetComponent<Text>().text = $"Words: {string.Join(", ", toRemember.ToArray())}";
             }
             text.GetComponent<Text>().text = successText;
 
-            // TODO: RETURN BACK TO MAZE GAME
+            // disable after some time
             timer.set(3.0f, () => {
-                // gameObject.SetActive(false);
+                gameObject.SetActive(false);
             });
 
         }
@@ -200,9 +217,9 @@ public class WordMemoryGameScript : MonoBehaviour
                     }
                     
                     // check if player word/guess is correct
-                    if (toRemember.Contains(playerWord)) {
+                    if (toRememberTemp.Contains(playerWord)) {
                         StartCoroutine(Flash(wordInRow[currentRow], true));
-                        toRemember.Remove(playerWord);
+                        toRememberTemp.Remove(playerWord);
                         currentRow++;
                         currentCol = 0;
                         correct++;
@@ -251,11 +268,7 @@ public class WordMemoryGameScript : MonoBehaviour
             Debug.Log(string.Join("\n", toRemember.ToArray()));
         }
 
-
-        // TODO: RETURN BACK TO MAZE GAME
-        if (i == 0) {
-
-        }
+        if (i == 0) gameObject.SetActive(false);
     }
 
 }
