@@ -20,6 +20,7 @@ public class Puzzle : MonoBehaviour
     public GameObject fillPrefab;
     public GameObject scramblePrefab;
 
+    private Animator animation_controller;
     public int num_puzzlesTypes = 5;
     public PuzzleType puzzleType;
     GameObject p = null;
@@ -34,6 +35,8 @@ public class Puzzle : MonoBehaviour
         done = false;
         success = false;
         interactable = true;
+        animation_controller = GetComponent<Animator>();
+        createPuzzle();
     }
 
     // Update is called once per frame
@@ -67,7 +70,29 @@ public class Puzzle : MonoBehaviour
 
             // TODO: maybe animations to show success
         }
+
+        // TEMPORARY
+        if (Input.GetKey(KeyCode.O)) {
+            animation_controller.SetBool("solved", true);
+        }
+
+
+        // TODO: RAYCAST TO INTERACT WITH PUZZLE
+        // Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0f, 0f, 50f));
+        // Ray ray = new Ray(mousePos, dir[i]);
+        // RaycastHit hit;
+        // if (Physics.Raycast(ray, out hit, 10.0f)) {
+        //     if (hit.collider.name = "unsolvedGiraffePuzzle") {
+        //         p.SetActive(true);           // turn on puzzle
+        //         Debug.Log(hit.collider.name);
+        //         Debug.Log(hit.point);
+
+        //         hit.collider.ClosestPointOnBounds(mousePos);
+        //     }
+        // }
+
     }
+
 
 
     public void createPuzzle() {
@@ -96,13 +121,10 @@ public class Puzzle : MonoBehaviour
                 break;
         }
 
-        p.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+        p.transform.SetParent(GameObject.Find("Canvas").transform, false);
+        p.name = "unsolvedGiraffePuzzle";
         p.SetActive(false);
 
     }
 
-    // play puzzle on screen
-    public void play() {
-        p.SetActive(true);
-    }
 }

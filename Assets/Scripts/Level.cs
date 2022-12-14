@@ -24,6 +24,8 @@ public class Level {
     public int num_enemies;
     public int num_mysteries;
     public bool success = false;
+    public Vector2 playerStart;
+    public Vector2 playerGoal;
 
     // Convert each block on the grid to a singular number
     Graph<int> g;                       // graph with no wall tiles
@@ -191,6 +193,8 @@ public class Level {
         int wend = Random.Range(1, width - 2);
         int lend = length - 1;
         int end = wend * width + lend;
+        playerStart = new Vector2(wstart, lstart);
+        playerGoal = new Vector2(wend, lend);
         
         g.addVertex(start);
         gWall.addVertex(start);
@@ -209,8 +213,8 @@ public class Level {
 
         grid[wstart, lstart] = new List<TileType>() { TileType.FLOOR };
         grid[wend, lend] = new List<TileType>() { TileType.FLOOR };
-
-
+    
+    
         connectPaths();
     }
 

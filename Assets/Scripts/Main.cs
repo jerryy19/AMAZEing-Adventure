@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class Main : MonoBehaviour
 {
-    public GameObject bananaMan;
+    public GameObject bananaMan;        // enemy prefab
+    public GameObject giraffePrefab;    // puzzle prefab
     
     // TODO: Maybe move this stuff to another script?
     [System.Serializable]
@@ -22,57 +23,28 @@ public class Main : MonoBehaviour
     [SerializeField]
     private UniversalRenderPipelineAsset pipelineAsset;
     
-    // Used for instantiating the different objects; each location is the center of a square
-    public Vector3[,] squareLocations;
+    
+    [SerializeField]
+    private List<GameObject> plist = new List<GameObject>();
     
     // Start is called before the first frame update
     void Start()
     {
+        plist.AddRange(Resources.LoadAll<GameObject>("CityVoxelPack/Assets/buildings/medium/Prefabs"));
 
         // create default levels
         // levels is a grid that tells us what goes where
         Level level = new Level(16, 16);
         level.createLevel();
         List<TileType>[,] grid = level.grid;
-        squareLocations = new Vector3[16, 16];
-        visualizeLevel(grid, level);
 
-        
-        // instantiations
-        // add puzzle to level
-
-        // add enemy to level
+        // instantiations game
+        instantiateGame(grid, level);
 
 
     }
 
-    // TODO: WALL INSTANTIATIONS 
-    // void wallInstantiations() {
-    //         List<GameObject> plist = new List<GameObject>();
-
-    //     plist.AddRange(Resources.LoadAll<GameObject>("CityVoxelPack/Assets/buildings/medium/Prefabs"));
-
-    //     Bounds bounds = GetComponent<Collider>().bounds; 
-
-    //     GameObject exteriorWalls = Instantiate(plist[Random.Range(0, plist.Count-1)], new Vector3(0, 0, 0), Quaternion.identity);
-    //     GameObject o = exteriorWalls.transform.GetChild(0).gameObject;
-    //     o.AddComponent<MeshCollider>();
-    //     o.GetComponent<MeshCollider>().convex = true;
-    //     Bounds currentSize = o.GetComponent<Collider>().bounds;
-    //     // exteriorWalls.name = "exteriorWalls";
-    //     // exteriorWalls.transform.localScale = new Vector3(0.5f * bounds.size[0], 1.0f, 0.5f * bounds.size[2]);
-        
-    //     float newSizeRatioX = bounds.size.x / currentSize.size.x;
-    //     float newSizeRatioZ = bounds.size.z / currentSize.size.z;
-
-    //     float minimumNewSizeRatio = Mathf.Min(newSizeRatioX, newSizeRatioZ);
-
-    //     Vector3 newScale = new Vector3(exteriorWalls.transform.localScale.x * minimumNewSizeRatio, exteriorWalls.transform.localScale.y, exteriorWalls.transform.localScale.z * minimumNewSizeRatio);
-    //     exteriorWalls.transform.localScale = newScale;
-    // }
-
-    // TEMPORARY FUNCTION TO SEE THE LEVEL DESIGN
-    void visualizeLevel(List<TileType>[,] grid, Level level) {
+    void instantiateGame(List<TileType>[,] grid, Level level) {
         Color floor = new Color(1f, 1f, 1f);        // white
         Color wall = new Color(0f, 0f, 0f);         // black
         Color mystery = new Color(0f, 0f, 1f);      // blue
@@ -82,14 +54,25 @@ public class Main : MonoBehaviour
         Color enemy = new Color(1f, 1f, 0f);        // yellow
         Color puzzle = new Color(1f, 0f, 1f);       // purp
 
+        GameObject gridObj = new GameObject();
+        gridObj.name = "Grid";
+        gridObj.transform.SetParent(transform, false);
 
         for (int w = 0; w < level.width; w++) {
             for (int l = 0; l < level.length; l++) {
                 GameObject o = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                // if (grid[w,l].Count == 5) {
-                //     Debug.Log("TRUE");
-                // }
-                // Debug.Log($"{w},{l} {c}, {grid[w,l][0]}");
+                o.name = $"({w}, {l})";
+                o.transform.SetParent(gridObj.transform, false);
+                o.transform.localScale = new Vector3(0.2f, 1, 0.2f);
+                o.transform.position = new Vector3(w * 2, 0, l * 2);
+
+                if (level.playerStart == new Vector2(w, l) || level.playerGoal == new Vector2(w, l)) continue;
+
+                // exterior wall
+                if (w == 0 || w == level.width - 1 || l == 0 || l == level.length - 1) {
+                    initExteriorWall(o);
+                }
+
                 switch (grid[w, l][0]) {
                     case TileType.FLOOR:
                         o.GetComponent<Renderer>().material.color = floor;
@@ -101,10 +84,12 @@ public class Main : MonoBehaviour
                     
                     case TileType.PUZZLE:
                         o.GetComponent<Renderer>().material.color = puzzle;
+                        initPuzzle(o.transform.position);
                         break;
                     
                     case TileType.ENEMY:
                         o.GetComponent<Renderer>().material.color = enemy;
+                        initEnemy(o.transform.position);
                         break;
                     
                     case TileType.SPEED:
@@ -118,33 +103,67 @@ public class Main : MonoBehaviour
                     case TileType.MYSTERY:
                         o.GetComponent<Renderer>().material.color = mystery;
                         break;
-                    
 
                 }
-                
-                o.transform.localScale -= new Vector3(0.8f, 0, 0.8f);
-                o.transform.position = new Vector3(w * 2, 0, l * 2);
-                squareLocations[w, l] = new Vector3(w * 2, 0, l * 2 + 1);
-                // TODO: Move this instantiation to Start or another method; just here for testing.
-                if (grid[w,l][0] == TileType.ENEMY)
-                    Instantiate(bananaMan, squareLocations[w, l], Quaternion.identity);
-                
-                o.name = $"({w}, {l})";
-                o.transform.SetParent(transform, false);
             }
         }
-
-        // // START
         // GameObject x = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         // x.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
         // x.transform.position = new Vector3(Random.Range(1, level.width - 1) * 10, 0, 0);
         // x.transform.localScale = new Vector3(7, 7, 7);
+    }
 
-        // // GOAL
-        // GameObject y = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        // y.GetComponent<Renderer>().material.color = new Color(1f, 0.5f, 0.5f);
-        // y.transform.position = new Vector3(Random.Range(1, level.width - 1) * 10, 0, (level.length - 1) * 10);
-        // y.transform.localScale = new Vector3(7, 7, 7);
+    void initExteriorWall(GameObject platformObj) {
+        Bounds bounds = platformObj.GetComponent<Collider>().bounds;
+
+        // https://answers.unity.com/questions/1372385/object-size-changing-issue-w-box-collider.html
+        // collider bounds would automatically scale according to transform.localScale but when 
+        // changing transform.localScale when scripting collider bounds does not automatically scale
+        bounds.size *= 0.2f;            //  manually scale it
+
+        int index = Random.Range(0, plist.Count);
+        // exclude some assets
+        while (index >= 4 && index <= 9) {
+            index = Random.Range(0, plist.Count);
+        }
+
+        GameObject buildingObj = Instantiate(plist[index], new Vector3(0, 0, 0), Quaternion.identity);
+        buildingObj.transform.position = platformObj.transform.position;
+        buildingObj.transform.SetParent(transform, false);
+        // building face directions
+        if (buildingObj.transform.position.x == 0) {
+            buildingObj.transform.Rotate(0.0f, 90.0f, 0.0f);
+        }
+        if (buildingObj.transform.position.x == 30) {
+            buildingObj.transform.Rotate(0.0f, 270.0f, 0.0f);
+        }
+        if (buildingObj.transform.position.z == 30) {
+            buildingObj.transform.Rotate(0.0f, 180.0f, 0.0f);
+        }
+
+
+        GameObject buildingObjChild = buildingObj.transform.GetChild(0).gameObject;
+        // add mesh collider to child because imported asset does not have
+        buildingObjChild.AddComponent<MeshCollider>();
+        buildingObjChild.GetComponent<MeshCollider>().convex = true;
+        Bounds buildingBounds = buildingObjChild.GetComponent<Collider>().bounds;
+
+        float ratio = Mathf.Min(bounds.size.x / buildingBounds.size.x, bounds.size.z / buildingBounds.size.z);
+
+        buildingObj.transform.localScale *= ratio;
+    }
+
+    void initPuzzle(Vector3 pos) {
+        GameObject p = Instantiate(giraffePrefab, pos, Quaternion.identity);
+        p.name = "Puzzle";
+        p.transform.SetParent(transform, false);
+
+    }
+
+    void initEnemy(Vector3 pos) {
+        GameObject e = Instantiate(bananaMan, pos, Quaternion.identity);
+        e.name = "Enemy";
+        e.transform.SetParent(transform, false);
     }
 
     // Update is called once per frame

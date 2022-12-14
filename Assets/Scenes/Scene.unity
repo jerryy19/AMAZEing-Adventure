@@ -153,10 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bananaMan: {fileID: 8466575738029226934, guid: ddd0adedcd5ecc24cbf9fa01d3fda551, type: 3}
+  giraffePrefab: {fileID: 3546361031156095172, guid: 931144d7763cd89419c95b61ce902d55, type: 3}
   renderFeatures:
   - feature: {fileID: 4308786648889311568, guid: 77e6533de4e88da4aa2b5c6aed78f9e3, type: 2}
     isEnabled: 0
   pipelineAsset: {fileID: 11400000, guid: a34239735db256248ae79dd395ec7f26, type: 2}
+  plist: []
 --- !u!4 &66068633
 Transform:
   m_ObjectHideFlags: 0
@@ -165,7 +167,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66068631}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.11405147, y: -0.44418263, z: 1.2344228}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -472,7 +474,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -658,6 +660,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   letterPrefab: {fileID: 4836559179909036137, guid: 37152d47e888d9141a31b7b2c19138a2, type: 3}
+  done: 0
+  success: 0
 --- !u!114 &1179209687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,7 +760,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1777608419
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -87,8 +87,8 @@ GameObject:
   - component: {fileID: 6490935273587881374}
   - component: {fileID: 4731205524894408323}
   - component: {fileID: 4530046867138200245}
-  - component: {fileID: 4505365007387481012}
   - component: {fileID: 4505365007387481013}
+  - component: {fileID: 4505365007387481012}
   m_Layer: 5
   m_Name: WordMemoryGamePrefab
   m_TagString: Untagged
@@ -158,18 +158,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4505365007387481012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 991346413116543088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70853bca77fe1e84c9e95a184fd141d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4505365007387481013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +171,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   letterPrefab: {fileID: 4836559179909036137, guid: 1ee1f68e2e0d6b845a6122b8a8683111, type: 3}
+  done: 0
+  success: 0
+--- !u!114 &4505365007387481012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991346413116543088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70853bca77fe1e84c9e95a184fd141d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2888429398040960346
 GameObject:
   m_ObjectHideFlags: 0
