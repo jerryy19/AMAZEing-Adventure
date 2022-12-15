@@ -11,18 +11,6 @@ public class Main : MonoBehaviour
     public GameObject bananaMan;        // enemy prefab
     public GameObject giraffePrefab;    // puzzle prefab
     
-    // TODO: Maybe move this stuff to another script?
-    [System.Serializable]
-    public struct RenderFeatureToggle
-    {
-        public ScriptableRendererFeature feature;
-        public bool isEnabled;
-    }
-    [SerializeField]
-    private List<RenderFeatureToggle> renderFeatures = new List<RenderFeatureToggle>();
-    [SerializeField]
-    private UniversalRenderPipelineAsset pipelineAsset;
-    
     
     [SerializeField]
     private List<GameObject> plist = new List<GameObject>();
@@ -169,15 +157,6 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.P))
-        {
-            renderFeatures[0].feature.SetActive(true);
-        }
-        else
-        {
-            renderFeatures[0].feature.SetActive(false);
-        }
-        
         // player movement in another script
         // enemy movement in another script
         // menu/tutorial scene stuff?
