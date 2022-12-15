@@ -16,76 +16,64 @@ public class BigVegas : MonoBehaviour
     public float velocity;
     public int num_lives;
     public bool has_won;
-    public float deathtime = 0.0f;
+    public float interval = 2.0f;
+    public float top_speed;
     // Start is called before the first frame update
     void Start()
     {
         animation_controller = GetComponent<Animator>();
         character_controller = GetComponent<CharacterController>();
         movement_direction = new Vector3(0.0f, 0.0f, 0.0f);
-        walking_velocity = 1.5f;
         velocity = 0.0f;
         num_lives = 5;
         has_won = false;
+        top_speed = 1.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        // if get item assign top_speed to 5 or .5
         bool isWalkingForwardPressed = Input.GetKey("up");
         bool isWalkingBackwardPressed = Input.GetKey("down");
-        bool isRunForwardPressed = (Input.GetKey("left shift") || Input.GetKey("right shift")) && isWalkingForwardPressed;
-        bool isJumpPressed = Input.GetKey("space");
-        bool isIdlePressed = !isWalkingForwardPressed && !isWalkingBackwardPressed && !isRunForwardPressed && !isJumpPressed;
-        bool noWalkForwardInterference = !(isRunForwardPressed);
-        float interval = 5.0f;
+        bool isLeftTurn = Input.GetKey("left");
+        bool isRightTurn = Input.GetKey("right");
+        //bool isRunForwardPressed = (Input.GetKey("left shift") || Input.GetKey("right shift")) && isWalkingForwardPressed;
+        bool isDance = Input.GetKey("r");
+        bool isSillyDance = Input.GetKey("t");
+        bool isIdlePressed = !isWalkingForwardPressed && !isWalkingBackwardPressed;
+        animation_controller.SetBool("IsLeftTurn", isLeftTurn);
+        animation_controller.SetBool("IsRightTurn", isRightTurn);
 
-        if (has_won) {
-            animation_controller.Play("Idle", -1, 0);
-             
-        } else {
-            animation_controller.SetBool("IsStartWalkingForward", isWalkingForwardPressed && velocity < walking_velocity);
-            Debug.Log(isWalkingForwardPressed + " " + (velocity));
-            animation_controller.SetBool("IsWalkingForward", isWalkingForwardPressed && velocity == walking_velocity);
-            //animation_controller.SetBool("IsWalkingBackward", isWalkingBackwardPressed);
-            //animation_controller.SetBool("IsRunForward", isRunForwardPressed && !isJumpPressed);
-            animation_controller.SetBool("IsIdle", isIdlePressed);            
-            //animation_controller.SetBool("IsJump", isJumpPressed && !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("Jump"));
-        }
-        
+        animation_controller.SetBool("IsWalkingForward", isWalkingForwardPressed && velocity < 3.0f);
+        animation_controller.SetBool("IsRunningForward", isWalkingForwardPressed && velocity > 3.0f);
+        animation_controller.SetBool("IsWalkingBackward", isWalkingBackwardPressed);
+        //animation_controller.SetBool("IsRunForward", isRunForwardPressed && !isJumpPressed);
+        animation_controller.SetBool("IsIdle", isIdlePressed);      
+        animation_controller.SetBool("IsDance", isDance);      
+        animation_controller.SetBool("IsSillyDance", isSillyDance);
 
-        if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("RunningForward")) {
-            if (velocity < walking_velocity * 2.0f) {
-                velocity += (walking_velocity * 2.0f) / interval;
+        if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingForward")) {
+            if (velocity >= top_speed) {
+                velocity = top_speed;
             } else {
-                velocity = walking_velocity * 2.0f;
+                velocity += (top_speed) / interval;
             }
-        } else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("StartWalkingForward")) {
-            Debug.Log("yes");
-            velocity += walking_velocity / interval;
-        } else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingForward")) { 
-            velocity = walking_velocity;
-        } else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingBackward")) {
+        }  else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingBackward")) {
+            if (velocity * -1.0f >= top_speed) {
+                velocity = -top_speed;
+            } else {
+                velocity -= (top_speed) / interval;
+            }         
+        } else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("RunningForward")) {
             
-            if (velocity > -walking_velocity/1.5f) {
-                velocity -= (walking_velocity/1.5f) / interval;
-            } else {
-                velocity = -walking_velocity/1.5f;
-            }
-        } 
-        // else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("Jump")) {
-        //     if (velocity < walking_velocity * 3.0f) {
-        //         velocity += (walking_velocity * 3.0f) / interval;
-        //     } else {
-        //         velocity = walking_velocity * 3.0f;
-        //     }
-        // } 
-        else {
+        } else {
             velocity = 0.0f;
         }
-        if (has_won || num_lives == 0) {
-            velocity = 0.0f;
-        }
+            float turn = Input.GetAxis("Horizontal");
+            transform.Rotate(0, turn * 100f * Time.deltaTime, 0);
+        
         float xdirection = Mathf.Sin(Mathf.Deg2Rad * transform.rotation.eulerAngles.y);
         float zdirection = Mathf.Cos(Mathf.Deg2Rad * transform.rotation.eulerAngles.y);
         movement_direction = new Vector3(xdirection, 0.0f, zdirection);
