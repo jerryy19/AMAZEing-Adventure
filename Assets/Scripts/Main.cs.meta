@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 8c4d937ad605f7b498e955b8f84a6b0c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - bananaMan: {fileID: 8466575738029226934, guid: ddd0adedcd5ecc24cbf9fa01d3fda551, type: 3}
+  - pipelineAsset: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

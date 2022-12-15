@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b41def85d1ae5534e832100734c4c1a9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - typingPrefab: {fileID: 6591674131500743682, guid: 87436c08d69d0d64fac87fa6e1a16d8a, type: 3}
+  - wordPrefab: {fileID: 991346413116543088, guid: 4a851eaf88104c642823102f9e081826, type: 3}
+  - fourdlePrefab: {fileID: 1815470039228943399, guid: cecb290b991863a4a8362b493ab8ea59, type: 3}
+  - fillPrefab: {fileID: 2478158979494733711, guid: 6d497f396629dbe43a31c08d771ef700, type: 3}
+  - scramblePrefab: {fileID: 284479969855655715, guid: f8554fcb8941ef742aaf41ad4f8d9596, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
