@@ -10,14 +10,13 @@ public class BigVegas : MonoBehaviour
     private CharacterController character_controller;
     public Vector3 movement_direction;
     public float walking_velocity;
-    // public Text text;    
-    // public Text text2;
-
+    public Text health;    
+    public GameObject health_bar;
     public float velocity;
-    public int num_lives;
     public bool has_won;
     public float interval = 2.0f;
     public float top_speed;
+    public int healthpoint;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,16 +24,21 @@ public class BigVegas : MonoBehaviour
         character_controller = GetComponent<CharacterController>();
         movement_direction = new Vector3(0.0f, 0.0f, 0.0f);
         velocity = 0.0f;
-        num_lives = 5;
+        healthpoint = 100;
         has_won = false;
+        // change top speed to change speed
         top_speed = 1.5f;
     }
 
     // Update is called once per frame
     void Update()
-    {
-
-        // if get item assign top_speed to 5 or .5
+    {   
+        if (healthpoint < 0) {
+            Debug.Log("game ended");
+        }
+        Slider slider = health_bar.GetComponent("Slider") as Slider;
+        slider.value = healthpoint;
+        health.text = "100 / " + healthpoint;
         bool isWalkingForwardPressed = Input.GetKey("up");
         bool isWalkingBackwardPressed = Input.GetKey("down");
         bool isLeftTurn = Input.GetKey("left");
@@ -45,7 +49,6 @@ public class BigVegas : MonoBehaviour
         bool isIdlePressed = !isWalkingForwardPressed && !isWalkingBackwardPressed;
         animation_controller.SetBool("IsLeftTurn", isLeftTurn);
         animation_controller.SetBool("IsRightTurn", isRightTurn);
-
         animation_controller.SetBool("IsWalkingForward", isWalkingForwardPressed && velocity < 3.0f);
         animation_controller.SetBool("IsRunningForward", isWalkingForwardPressed && velocity > 3.0f);
         animation_controller.SetBool("IsWalkingBackward", isWalkingBackwardPressed);
