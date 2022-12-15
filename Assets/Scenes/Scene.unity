@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bananaMan: {fileID: 8466575738029226934, guid: ddd0adedcd5ecc24cbf9fa01d3fda551, type: 3}
   giraffePrefab: {fileID: 3546361031156095172, guid: 931144d7763cd89419c95b61ce902d55, type: 3}
+  playerPrefab: {fileID: 1583953293752207077, guid: afc1ef782241d25409e275300b0f1fea, type: 3}
+  solvedPuzzles: 0
   plist: []
 --- !u!4 &66068633
 Transform:
@@ -454,7 +456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
