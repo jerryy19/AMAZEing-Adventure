@@ -1,11 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Mystery : MonoBehaviour
 {
     GameObject level;
     Collider c;
+    
+    [System.Serializable]
+    public struct RenderFeatureToggle
+    {
+        public ScriptableRendererFeature feature;
+        public bool isEnabled;
+    }
+    [SerializeField]
+    private List<RenderFeatureToggle> renderFeatures = new List<RenderFeatureToggle>();
+    [SerializeField]
+    private UniversalRenderPipelineAsset pipelineAsset;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +35,14 @@ public class Mystery : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey(KeyCode.P))
+        {
+            renderFeatures[0].feature.SetActive(true);
+        }
+        else
+        {
+            renderFeatures[0].feature.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: f571d441a5deffa429060e1e8748b882
+guid: ea4b509d81cc0454a8349f0829eec8ff
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - pipelineAsset: {fileID: 11400000, guid: a34239735db256248ae79dd395ec7f26, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

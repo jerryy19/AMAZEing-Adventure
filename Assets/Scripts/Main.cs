@@ -10,19 +10,11 @@ public class Main : MonoBehaviour
 {
     public GameObject bananaMan;        // enemy prefab
     public GameObject giraffePrefab;    // puzzle prefab
+    public GameObject playerPrefab;     // player
     
-    // TODO: Maybe move this stuff to another script?
-    [System.Serializable]
-    public struct RenderFeatureToggle
-    {
-        public ScriptableRendererFeature feature;
-        public bool isEnabled;
-    }
-    [SerializeField]
-    private List<RenderFeatureToggle> renderFeatures = new List<RenderFeatureToggle>();
-    [SerializeField]
-    private UniversalRenderPipelineAsset pipelineAsset;
-    
+    GameObject playerObj;
+    public int solvedPuzzles = 0;
+    public Level level;
     
     [SerializeField]
     private List<GameObject> plist = new List<GameObject>();
@@ -34,17 +26,16 @@ public class Main : MonoBehaviour
 
         // create default levels
         // levels is a grid that tells us what goes where
-        Level level = new Level(16, 16);
+        level = new Level(16, 16);
         level.createLevel();
-        List<TileType>[,] grid = level.grid;
 
         // instantiations game
-        instantiateGame(grid, level);
+        instantiateGame(level);
 
 
     }
 
-    void instantiateGame(List<TileType>[,] grid, Level level) {
+    public void instantiateGame(Level level) {
         Color floor = new Color(1f, 1f, 1f);        // white
         Color wall = new Color(0f, 0f, 0f);         // black
         Color mystery = new Color(0f, 0f, 1f);      // blue
@@ -68,18 +59,20 @@ public class Main : MonoBehaviour
 
                 if (level.playerStart == new Vector2(w, l) || level.playerGoal == new Vector2(w, l)) continue;
 
-                // exterior wall
-                if (w == 0 || w == level.width - 1 || l == 0 || l == level.length - 1) {
-                    initExteriorWall(o);
-                }
-
-                switch (grid[w, l][0]) {
+                switch (level.grid[w, l][0]) {
                     case TileType.FLOOR:
                         o.GetComponent<Renderer>().material.color = floor;
                         break;
                     
                     case TileType.WALL:
                         o.GetComponent<Renderer>().material.color = wall;
+                        // exterior wall
+                        if (w == 0 || w == level.width - 1 || l == 0 || l == level.length - 1) {
+                            initExteriorWall(o);
+                        } else {
+                            initInteriorWall(o);
+                        }
+
                         break;
                     
                     case TileType.PUZZLE:
@@ -107,10 +100,12 @@ public class Main : MonoBehaviour
                 }
             }
         }
-        // GameObject x = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        // x.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
-        // x.transform.position = new Vector3(Random.Range(1, level.width - 1) * 10, 0, 0);
-        // x.transform.localScale = new Vector3(7, 7, 7);
+
+
+        playerObj = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        playerObj.transform.position = new Vector3(level.playerStart.x * 2, 0, level.playerStart.y * 2);
+
+
     }
 
     void initExteriorWall(GameObject platformObj) {
@@ -145,7 +140,29 @@ public class Main : MonoBehaviour
         GameObject buildingObjChild = buildingObj.transform.GetChild(0).gameObject;
         // add mesh collider to child because imported asset does not have
         buildingObjChild.AddComponent<MeshCollider>();
-        buildingObjChild.GetComponent<MeshCollider>().convex = true;
+        // buildingObjChild.GetComponent<MeshCollider>().convex = true;
+        Bounds buildingBounds = buildingObjChild.GetComponent<Collider>().bounds;
+
+        float ratio = Mathf.Min(bounds.size.x / buildingBounds.size.x, bounds.size.z / buildingBounds.size.z);
+
+        buildingObj.transform.localScale *= ratio;
+    }
+
+    void initInteriorWall(GameObject platformObj) {
+        Bounds bounds = platformObj.GetComponent<Collider>().bounds;
+        bounds.size *= 0.2f;            //  manually scale it
+
+        int index = Random.Range(0, plist.Count);
+
+        GameObject buildingObj = Instantiate(plist[index], new Vector3(0, 0, 0), Quaternion.identity);
+        buildingObj.transform.position = platformObj.transform.position;
+        buildingObj.transform.SetParent(transform, false);
+
+
+        GameObject buildingObjChild = buildingObj.transform.GetChild(0).gameObject;
+        // add mesh collider to child because imported asset does not have
+        buildingObjChild.AddComponent<MeshCollider>();
+        // buildingObjChild.GetComponent<MeshCollider>().convex = true;
         Bounds buildingBounds = buildingObjChild.GetComponent<Collider>().bounds;
 
         float ratio = Mathf.Min(bounds.size.x / buildingBounds.size.x, bounds.size.z / buildingBounds.size.z);
@@ -169,17 +186,39 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.P))
-        {
-            renderFeatures[0].feature.SetActive(true);
+
+        // INTERACT WITH PUZZLE
+        if (Input.GetMouseButtonDown(0)) {
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 10.0f)) {
+                if (hit.collider.name.IndexOf("Plane") != -1) {
+                    GameObject puzzleGameObject = hit.collider.transform.parent.gameObject;
+                    Puzzle p = puzzleGameObject.GetComponent<Puzzle>();
+                    if (p.interactable) {
+                        if (p.done && !p.success) {
+                            p.createPuzzle(p.puzzleType);
+                        }
+                        p.startPuzzle();
+                    }
+                }
+            }
         }
-        else
-        {
-            renderFeatures[0].feature.SetActive(false);
+
+
+        if (solvedPuzzles == level.num_puzzles && checkWin()) {
+            Debug.Log("hi");
         }
-        
-        // player movement in another script
-        // enemy movement in another script
-        // menu/tutorial scene stuff?
+
+
     }
+
+    bool checkWin() {
+        int x = (int)Mathf.Floor(playerObj.transform.position.x / 2);
+        int z = (int)Mathf.Floor(playerObj.transform.position.z / 2);
+
+        return level.playerGoal.x == x && level.playerGoal.y == z;
+    }
+
 }

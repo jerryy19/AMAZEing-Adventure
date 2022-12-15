@@ -36,7 +36,7 @@ public class ScrambleGameScript : MonoBehaviour
 
         timer = GetComponent<Timer>();
 
-        using (StreamReader sr = File.OpenText("./Assets/UI/Puzzles/wordBank.txt")) {
+        using (StreamReader sr = File.OpenText("./Assets/Puzzle/Puzzles/wordBank.txt")) {
             string s = "";
             while ((s = sr.ReadLine()) != null) {
                 words.Add(s.ToUpper());
