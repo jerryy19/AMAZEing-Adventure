@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -7,15 +9,8 @@ public class Mystery : MonoBehaviour
 {
     GameObject level;
     Collider c;
-    
-    [System.Serializable]
-    public struct RenderFeatureToggle
-    {
-        public ScriptableRendererFeature feature;
-        public bool isEnabled;
-    }
-    [SerializeField]
-    private List<RenderFeatureToggle> renderFeatures = new List<RenderFeatureToggle>();
+
+    private List<ScriptableRendererFeature> renderFeatures; 
     [SerializeField]
     private UniversalRenderPipelineAsset pipelineAsset;
     
@@ -24,8 +19,14 @@ public class Mystery : MonoBehaviour
     void Start()
     {
         level = GameObject.Find("Level");
-        c = gameObject.AddComponent<Collider>();
-        c.isTrigger = true;
+        // c = gameObject.AddComponent<Collider>();
+        // c.isTrigger = true;
+
+        pipelineAsset = (UniversalRenderPipelineAsset)AssetDatabase.LoadAssetAtPath("Assets/URP Asset.asset", typeof(UniversalRenderPipelineAsset));
+        ScriptableRenderer renderer = pipelineAsset.GetRenderer(0);
+        var property = typeof(ScriptableRenderer).GetProperty("rendererFeatures", BindingFlags.NonPublic | BindingFlags.Instance);
+        renderFeatures = property.GetValue(renderer) as List<ScriptableRendererFeature>;
+        
 
         Bounds bounds = GetComponent<Collider>().bounds;
         bounds.size *= 0.2f;
@@ -37,14 +38,7 @@ public class Mystery : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.P))
-        {
-            renderFeatures[0].feature.SetActive(true);
-        }
-        else
-        {
-            renderFeatures[0].feature.SetActive(false);
-        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,5 +46,10 @@ public class Mystery : MonoBehaviour
         // when player enter mystery field, it shows where enemies are
         // get player from the level
         Debug.Log("MYSTERY");
+        renderFeatures[0].SetActive(true);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        renderFeatures[0].SetActive(false);
     }
 }
