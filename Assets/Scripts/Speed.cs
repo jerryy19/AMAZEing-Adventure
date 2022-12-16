@@ -5,14 +5,14 @@ using UnityEngine;
 public class Speed : MonoBehaviour
 {
     GameObject level;
-    Collider c;
+    //Collider c;
 
     // Start is called before the first frame update
     void Start()
     {
         level = GameObject.Find("Level");
-        c = gameObject.AddComponent<Collider>();
-        c.isTrigger = true;
+        //c = gameObject.AddComponent<Collider>();
+        //c.isTrigger = true;
 
         Bounds bounds = GetComponent<Collider>().bounds;
         bounds.size *= 0.2f;
@@ -31,6 +31,17 @@ public class Speed : MonoBehaviour
     {
         // when player enter speed field, it slows the player down for some time
         // get player from the level
+        
+        other.gameObject.GetComponent<BigVegas>().top_speed = 3.0f;
+        StartCoroutine(SpeedUp(other));
         Debug.Log("SPEED");
+    
+    }
+
+    IEnumerator SpeedUp(Collider other) {
+        
+        yield return new WaitForSeconds(3.0f);
+        other.gameObject.GetComponent<BigVegas>().top_speed = 1.5f;
+        Debug.Log(other.gameObject.GetComponent<BigVegas>().top_speed);
     }
 }

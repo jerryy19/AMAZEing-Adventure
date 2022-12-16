@@ -31,8 +31,6 @@ public class Main : MonoBehaviour
 
         // instantiations game
         instantiateGame(level);
-
-
     }
 
     // instantiate all game objects
