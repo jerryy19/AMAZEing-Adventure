@@ -57,9 +57,17 @@ public class BigVegas : MonoBehaviour
         animation_controller.SetBool("IsSillyDance", isSillyDance);
 
         if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingForward")) {
+            if (velocity >= top_speed) {
                 velocity = top_speed;
+            } else {
+                velocity += (top_speed) / interval;
+            }
         }  else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingBackward")) {
+            if (velocity * -1.0f >= top_speed) {
                 velocity = -top_speed;
+            } else {
+                velocity -= (top_speed) / interval;
+            }         
         } else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("RunningForward")) {
             
         } else {
