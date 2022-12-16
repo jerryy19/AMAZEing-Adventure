@@ -25,6 +25,7 @@ public class Puzzle : MonoBehaviour
     public PuzzleType puzzleType;
     GameObject p = null;
 
+    bool called;                // check if update method already called this method
     public bool done;           // did user finish puzzle (success or fail)
     public bool success;        // did user succeed in solving puzzle
     public bool interactable;   // if succeed in solving puzzle, then this puzzle is no longer interactable
@@ -32,6 +33,7 @@ public class Puzzle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        called = false;
         done = false;
         success = false;
         interactable = true;
@@ -65,35 +67,20 @@ public class Puzzle : MonoBehaviour
                 break;
         }
         
-        if (done && success) {
+        if (!called && done && success) {
+            called = true;
             interactable = false;
-
-            // TODO: maybe animations to show success
-        }
-
-        // TEMPORARY
-        if (Input.GetKey(KeyCode.O)) {
             animation_controller.SetBool("solved", true);
+            GameObject.Find("Level").GetComponent<Main>().solvedPuzzles++;
+            Debug.Log(GameObject.Find("Level").GetComponent<Main>().solvedPuzzles);
+
         }
-
-
-        // TODO: RAYCAST TO INTERACT WITH PUZZLE
-        // Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0f, 0f, 50f));
-        // Ray ray = new Ray(mousePos, dir[i]);
-        // RaycastHit hit;
-        // if (Physics.Raycast(ray, out hit, 10.0f)) {
-        //     if (hit.collider.name = "unsolvedGiraffePuzzle") {
-        //         p.SetActive(true);           // turn on puzzle
-        //         Debug.Log(hit.collider.name);
-        //         Debug.Log(hit.point);
-
-        //         hit.collider.ClosestPointOnBounds(mousePos);
-        //     }
-        // }
 
     }
 
-
+    public void startPuzzle() {
+        p.SetActive(true);
+    }
 
     public void createPuzzle() {
         puzzleType = (PuzzleType) Random.Range(0, num_puzzlesTypes);
@@ -101,6 +88,7 @@ public class Puzzle : MonoBehaviour
     }
     
     public void createPuzzle(PuzzleType puzzleType) {
+        called = false;
         done = false;
         success = false;
         switch (puzzleType) {

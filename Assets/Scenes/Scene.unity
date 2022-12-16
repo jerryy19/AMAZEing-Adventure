@@ -154,10 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bananaMan: {fileID: 8466575738029226934, guid: ddd0adedcd5ecc24cbf9fa01d3fda551, type: 3}
   giraffePrefab: {fileID: 3546361031156095172, guid: 931144d7763cd89419c95b61ce902d55, type: 3}
-  renderFeatures:
-  - feature: {fileID: 4308786648889311568, guid: 77e6533de4e88da4aa2b5c6aed78f9e3, type: 2}
-    isEnabled: 0
-  pipelineAsset: {fileID: 11400000, guid: a34239735db256248ae79dd395ec7f26, type: 2}
+  playerPrefab: {fileID: 1583953293752207077, guid: afc1ef782241d25409e275300b0f1fea, type: 3}
+  solvedPuzzles: 0
   plist: []
 --- !u!4 &66068633
 Transform:
@@ -173,6 +171,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &349162608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 349162610}
+  - component: {fileID: 349162609}
+  m_Layer: 0
+  m_Name: Sounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &349162609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349162608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4b509d81cc0454a8349f0829eec8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &349162610
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349162608}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.587817, y: 4.73987, z: -1.8881159}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &603806438
 GameObject:
@@ -414,7 +456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0

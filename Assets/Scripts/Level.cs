@@ -23,6 +23,7 @@ public class Level {
     List<int[]> unassigned;             // useful to keep variables that are unassigned so far
     public int num_enemies;
     public int num_mysteries;
+    public int num_puzzles;
     public bool success = false;
     public Vector2 playerStart;
     public Vector2 playerGoal;
@@ -107,9 +108,16 @@ public class Level {
                 function_calls = 0; 
             }
         }
+        
+        for (int w = 0; w < width; w++) {
+            for (int l = 0; l < length; l++) {
+                if (grid[w, l][0] == TileType.PUZZLE) num_puzzles++;
+            }
+        }
 
         // Post Processing after CSP
         postProcessing();
+        
 
     }
 
