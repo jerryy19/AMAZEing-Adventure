@@ -17,6 +17,8 @@ public class Speed : MonoBehaviour
         Bounds bounds = GetComponent<Collider>().bounds;
         bounds.size *= 0.2f;
 
+        GetComponent<MeshCollider>().convex = true;
+        GetComponent<MeshCollider>().isTrigger = true;
     }
 
     // Update is called once per frame
@@ -29,5 +31,6 @@ public class Speed : MonoBehaviour
     {
         // when player enter speed field, it slows the player down for some time
         // get player from the level
+        Debug.Log("SPEED");
     }
 }

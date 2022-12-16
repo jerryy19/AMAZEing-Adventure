@@ -17,12 +17,12 @@ public class Main : MonoBehaviour
     public Level level;
     
     [SerializeField]
-    private List<GameObject> plist = new List<GameObject>();
+    private List<GameObject> wallList = new List<GameObject>();
     
     // Start is called before the first frame update
     void Start()
     {
-        plist.AddRange(Resources.LoadAll<GameObject>("CityVoxelPack/Assets/buildings/medium/Prefabs"));
+        wallList.AddRange(Resources.LoadAll<GameObject>("CityVoxelPack/Assets/buildings/medium/Prefabs"));
 
         // create default levels
         // levels is a grid that tells us what goes where
@@ -35,6 +35,7 @@ public class Main : MonoBehaviour
 
     }
 
+    // instantiate all game objects
     public void instantiateGame(Level level) {
         Color floor = new Color(1f, 1f, 1f);        // white
         Color wall = new Color(0f, 0f, 0f);         // black
@@ -87,14 +88,17 @@ public class Main : MonoBehaviour
                     
                     case TileType.SPEED:
                         o.GetComponent<Renderer>().material.color = speed;
+                        initSpeed(o.transform.position);
                         break;
                     
                     case TileType.SLOW:
                         o.GetComponent<Renderer>().material.color = slow;
+                        initSlow(o.transform.position);
                         break;
                     
                     case TileType.MYSTERY:
                         o.GetComponent<Renderer>().material.color = mystery;
+                        initMystery(o.transform.position);
                         break;
 
                 }
@@ -108,6 +112,7 @@ public class Main : MonoBehaviour
 
     }
 
+    // instantiate exterior walls
     void initExteriorWall(GameObject platformObj) {
         Bounds bounds = platformObj.GetComponent<Collider>().bounds;
 
@@ -116,13 +121,13 @@ public class Main : MonoBehaviour
         // changing transform.localScale when scripting collider bounds does not automatically scale
         bounds.size *= 0.2f;            //  manually scale it
 
-        int index = Random.Range(0, plist.Count);
+        int index = Random.Range(0, wallList.Count);
         // exclude some assets
         while (index >= 4 && index <= 9) {
-            index = Random.Range(0, plist.Count);
+            index = Random.Range(0, wallList.Count);
         }
 
-        GameObject buildingObj = Instantiate(plist[index], new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject buildingObj = Instantiate(wallList[index], new Vector3(0, 0, 0), Quaternion.identity);
         buildingObj.transform.position = platformObj.transform.position;
         buildingObj.transform.SetParent(transform, false);
         // building face directions
@@ -148,13 +153,14 @@ public class Main : MonoBehaviour
         buildingObj.transform.localScale *= ratio;
     }
 
+    // instantiate interior walls
     void initInteriorWall(GameObject platformObj) {
         Bounds bounds = platformObj.GetComponent<Collider>().bounds;
         bounds.size *= 0.2f;            //  manually scale it
 
-        int index = Random.Range(0, plist.Count);
+        int index = Random.Range(0, wallList.Count);
 
-        GameObject buildingObj = Instantiate(plist[index], new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject buildingObj = Instantiate(wallList[index], new Vector3(0, 0, 0), Quaternion.identity);
         buildingObj.transform.position = platformObj.transform.position;
         buildingObj.transform.SetParent(transform, false);
 
@@ -170,6 +176,7 @@ public class Main : MonoBehaviour
         buildingObj.transform.localScale *= ratio;
     }
 
+    // instantiate puzzles
     void initPuzzle(Vector3 pos) {
         GameObject p = Instantiate(giraffePrefab, pos, Quaternion.identity);
         p.name = "Puzzle";
@@ -177,10 +184,42 @@ public class Main : MonoBehaviour
 
     }
 
+    // instantiate enemies
     void initEnemy(Vector3 pos) {
         GameObject e = Instantiate(bananaMan, pos, Quaternion.identity);
         e.name = "Enemy";
         e.transform.SetParent(transform, false);
+    }
+
+    // instantiate speed zone
+    void initSpeed(Vector3 pos) {
+        GameObject sp = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        sp.transform.localScale = new Vector3(0.2f, 1.0f, 0.2f);
+        sp.transform.position = pos + new Vector3(0.0f, -0.05f, 0.0f);
+        sp.name = "Speed";
+        sp.transform.SetParent(transform, false);
+        sp.AddComponent<Speed>();
+    }
+
+
+    // instantiate slow zone
+    void initSlow(Vector3 pos) {
+        GameObject sl = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        sl.transform.localScale = new Vector3(0.2f, 1.0f, 0.2f);
+        sl.transform.position = pos + new Vector3(0.0f, -0.05f, 0.0f);
+        sl.name = "Slow";
+        sl.transform.SetParent(transform, false);
+        sl.AddComponent<Slow>();
+    }
+
+    // instantiate mystery zone (shows enemies when standing on it)
+    void initMystery(Vector3 pos) {
+        GameObject m = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        m.transform.localScale = new Vector3(0.2f, 1.0f, 0.2f);
+        m.transform.position = pos + new Vector3(0.0f, -0.05f, 0.0f);
+        m.name = "Mystery";
+        m.transform.SetParent(transform, false);
+        // m.AddComponent<Mystery>();
     }
 
     // Update is called once per frame

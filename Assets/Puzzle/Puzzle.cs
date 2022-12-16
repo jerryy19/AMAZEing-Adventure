@@ -24,6 +24,7 @@ public class Puzzle : MonoBehaviour
     public int num_puzzlesTypes = 5;
     public PuzzleType puzzleType;
     GameObject p = null;
+    private Timer timer;
 
     bool called;                // check if update method already called this method
     public bool done;           // did user finish puzzle (success or fail)
@@ -33,6 +34,7 @@ public class Puzzle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timer = GetComponent<Timer>();
         called = false;
         done = false;
         success = false;
@@ -70,7 +72,9 @@ public class Puzzle : MonoBehaviour
         if (!called && done && success) {
             called = true;
             interactable = false;
-            animation_controller.SetBool("solved", true);
+            timer.set(3.0f, () => {
+                animation_controller.SetBool("solved", true);
+            });
             GameObject.Find("Level").GetComponent<Main>().solvedPuzzles++;
             Debug.Log(GameObject.Find("Level").GetComponent<Main>().solvedPuzzles);
 
@@ -94,23 +98,27 @@ public class Puzzle : MonoBehaviour
         switch (puzzleType) {
             case PuzzleType.TYPING: 
                 p = Instantiate(typingPrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                p.name = "TypingGame"; 
                 break;
             case PuzzleType.WORD_MEMORY:
                 p = Instantiate(wordPrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                p.name = "WordMemoryGame"; 
                 break;
             case PuzzleType.FOURDLE:
                 p = Instantiate(fourdlePrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                p.name = "FourdleGame"; 
                 break;
             case PuzzleType.FILL:
                 p = Instantiate(fillPrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                p.name = "FillGame"; 
                 break;
             case PuzzleType.SCRAMBLE:
                 p = Instantiate(scramblePrefab, new Vector3(0, 0, 0), Quaternion.identity); 
+                p.name = "ScrambleGame"; 
                 break;
         }
 
         p.transform.SetParent(GameObject.Find("Canvas").transform, false);
-        p.name = "unsolvedGiraffePuzzle";
         p.SetActive(false);
 
     }

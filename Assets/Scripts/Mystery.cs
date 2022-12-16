@@ -30,6 +30,8 @@ public class Mystery : MonoBehaviour
         Bounds bounds = GetComponent<Collider>().bounds;
         bounds.size *= 0.2f;
 
+        GetComponent<MeshCollider>().convex = true;
+        GetComponent<MeshCollider>().isTrigger = true;
     }
 
     // Update is called once per frame
@@ -49,5 +51,6 @@ public class Mystery : MonoBehaviour
     {
         // when player enter mystery field, it shows where enemies are
         // get player from the level
+        Debug.Log("MYSTERY");
     }
 }
