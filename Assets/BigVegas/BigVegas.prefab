@@ -581,7 +581,7 @@ Transform:
   m_GameObject: {fileID: 1583953293752207077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.28628528, y: 0.00000023841858, z: -4.8655186}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 393887009290814233}
@@ -659,11 +659,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement_direction: {x: 0, y: 0, z: 0}
   walking_velocity: 0
+  health: {fileID: 0}
+  health_bar: {fileID: 1110647929149114077, guid: bd0d8591aed1f424fa312c2c1e8e842c, type: 3}
   velocity: 0
-  num_lives: 0
-  has_won: 0
   interval: 5
   top_speed: 0
+  healthpoint: 0
 --- !u!1 &1603066434345821630
 GameObject:
   m_ObjectHideFlags: 0

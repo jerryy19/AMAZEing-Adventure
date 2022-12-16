@@ -10,10 +10,9 @@ public class BigVegas : MonoBehaviour
     private CharacterController character_controller;
     public Vector3 movement_direction;
     public float walking_velocity;
-    public Text health;    
+    public Text health;
     public GameObject health_bar;
     public float velocity;
-    public bool has_won;
     public float interval = 2.0f;
     public float top_speed;
     public int healthpoint;
@@ -24,8 +23,8 @@ public class BigVegas : MonoBehaviour
         character_controller = GetComponent<CharacterController>();
         movement_direction = new Vector3(0.0f, 0.0f, 0.0f);
         velocity = 0.0f;
+        health = health_bar.transform.GetChild(3).gameObject.GetComponent<Text>();
         healthpoint = 100;
-        has_won = false;
         // change top speed to change speed
         top_speed = 1.5f;
     }
@@ -58,17 +57,9 @@ public class BigVegas : MonoBehaviour
         animation_controller.SetBool("IsSillyDance", isSillyDance);
 
         if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingForward")) {
-            if (velocity >= top_speed) {
                 velocity = top_speed;
-            } else {
-                velocity += (top_speed) / interval;
-            }
         }  else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingBackward")) {
-            if (velocity * -1.0f >= top_speed) {
                 velocity = -top_speed;
-            } else {
-                velocity -= (top_speed) / interval;
-            }         
         } else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("RunningForward")) {
             
         } else {
