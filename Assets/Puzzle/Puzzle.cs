@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum PuzzleType
@@ -31,6 +32,10 @@ public class Puzzle : MonoBehaviour
     public bool success;        // did user succeed in solving puzzle
     public bool interactable;   // if succeed in solving puzzle, then this puzzle is no longer interactable
 
+    private AudioSource _audioSource;
+    private AudioClip solvedSound;
+    private AudioClip failedSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +46,11 @@ public class Puzzle : MonoBehaviour
         interactable = true;
         animation_controller = GetComponent<Animator>();
         createPuzzle();
+
+        gameObject.AddComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
+        solvedSound = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Sounds/PuzzleSolved.wav", typeof(AudioClip));
+        failedSound = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Sounds/PuzzleFailed.wav", typeof(AudioClip));
     }
 
     // Update is called once per frame
@@ -69,7 +79,10 @@ public class Puzzle : MonoBehaviour
                 break;
         }
         
-        if (!called && done && success) {
+        if (!called && done && success)
+        {
+            _audioSource.clip = solvedSound;
+            _audioSource.Play();
             called = true;
             interactable = false;
             timer.set(3.0f, () => {
@@ -79,6 +92,8 @@ public class Puzzle : MonoBehaviour
             Debug.Log(GameObject.Find("Level").GetComponent<Main>().solvedPuzzles);
         }
         if (!called && done && !success) {
+            _audioSource.clip = failedSound;
+            _audioSource.Play();
             called = true;
             timer.set(3.0f, () => {
                 animation_controller.SetBool("solved", true);
