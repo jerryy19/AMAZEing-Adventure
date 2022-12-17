@@ -22,7 +22,7 @@ public class BananaMan : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bananaSpeed = 200f;
+        bananaSpeed = 350f;
         can_see_player = false;
         direction_enemy_to_player = new Vector3(0, 0, 0);
         player = GameObject.Find("BigVegas(Clone)");
@@ -72,7 +72,9 @@ public class BananaMan : MonoBehaviour
         direction_banana_to_player.Normalize();
         Vector3 direction_to_shoot = PredictShootingDirection(direction_banana_to_player,
             thrownBanana.GetComponent<CapsuleCollider>().bounds.center);
-        thrownBanana.GetComponent<Rigidbody>().AddForce(direction_to_shoot * bananaSpeed);
+        thrownBanana.GetComponent<Rigidbody>().AddForce(
+            new Vector3(direction_to_shoot.x * bananaSpeed, Math.Abs(direction_to_shoot.y), direction_to_shoot.z * bananaSpeed)
+            );
     }
     private void AddAnimationEvent(string clipName, float time, string function, float param)
     {
@@ -108,7 +110,7 @@ public class BananaMan : MonoBehaviour
         while (delta_pos > epsilon)
         {
             float distance = Vector3.Distance(player.GetComponent<CapsuleCollider>().bounds.center, root);
-            float look_ahead_time = distance / bananaSpeed;
+            float look_ahead_time = distance * 2f / bananaSpeed;
 
             float playerSpeed = player.GetComponent<BigVegas>().velocity;
             Vector3 playerDirection = player.GetComponent<BigVegas>().movement_direction;
@@ -119,7 +121,7 @@ public class BananaMan : MonoBehaviour
 
             delta_pos = Vector3.Distance(future_target_pos, last_target_pos);
 
-            shooting_direction = new Vector3(future_target_pos.x, future_target_pos.y, future_target_pos.z);
+            shooting_direction = future_target_pos - root;
             shooting_direction.Normalize();
         }
 
