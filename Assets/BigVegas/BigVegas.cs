@@ -6,17 +6,21 @@ using UnityEngine.UI;
 
 public class BigVegas : MonoBehaviour
 {
-    private Animator animation_controller;
+    public Animator animation_controller;
     private CharacterController character_controller;
     public Vector3 movement_direction;
     public float walking_velocity;
     public Text health;
-    public GameObject health_bar;
+    public bool frompause = true;
     public float velocity;
     public float interval = 2.0f;
     public float top_speed;
     public int healthpoint;
-    // Start is called before the first frame update
+    public GameObject health_bar;
+    public GameObject guide;
+    public GameObject settings;
+    public GameObject pause;
+    public GameObject menu;
     void Start()
     {
         animation_controller = GetComponent<Animator>();
@@ -27,14 +31,31 @@ public class BigVegas : MonoBehaviour
         healthpoint = 100;
         // change top speed to change speed
         top_speed = 1.5f;
+        menu = GameObject.Find("Menu");
+        guide = GameObject.Find("Guide");
+        settings = GameObject.Find("Settings");
+        pause = GameObject.Find("PauseMenu");
+        health_bar = GameObject.Find("healthbar");
+        health_bar.SetActive(false);
+        settings.SetActive(false);
+        pause.SetActive(false);
+        guide.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {   
+
         if (healthpoint < 0) {
             Debug.Log("game ended");
         }
+        if (Input.GetKey("p")) {
+            animation_controller.enabled = false;
+            health_bar.SetActive(false);
+            pause.SetActive(true);
+            Debug.Log("pause");
+        }
+
         Slider slider = health_bar.GetComponent("Slider") as Slider;
         slider.value = healthpoint;
         health.text = "100 / " + healthpoint;
@@ -83,12 +104,14 @@ public class BigVegas : MonoBehaviour
         if (transform.position.y > 0.0f) // if the character starts "climbing" the terrain, drop her down
         {
             Vector3 lower_character = movement_direction * velocity * Time.deltaTime;
-            lower_character.y = -100f; // hack to force her down
+            lower_character.y = 0.0f; // hack to force her down
             character_controller.Move(lower_character);
         }
         else
         {
+            movement_direction.y -= 9.8f * Time.deltaTime;	
             character_controller.Move(movement_direction * velocity * Time.deltaTime);
         }
     }
+    
 }

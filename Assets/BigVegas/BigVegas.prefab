@@ -580,7 +580,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583953293752207077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.28628528, y: 0.00000023841858, z: -4.8655186}
+  m_LocalPosition: {x: 0.28628528, y: -1, z: -4.8655186}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -657,14 +657,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb00aeb7a22f148fba3f4dd436088ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animation_controller: {fileID: 0}
   movement_direction: {x: 0, y: 0, z: 0}
   walking_velocity: 0
   health: {fileID: 0}
-  health_bar: {fileID: 1110647929149114077, guid: bd0d8591aed1f424fa312c2c1e8e842c, type: 3}
+  frompause: 1
   velocity: 0
   interval: 5
   top_speed: 0
   healthpoint: 0
+  health_bar: {fileID: 1110647929149114077, guid: bd0d8591aed1f424fa312c2c1e8e842c, type: 3}
+  guide: {fileID: 1132133877514926288, guid: ecfa692646d0d455a8fd85a6cc993aca, type: 3}
+  settings: {fileID: 3229929625528081191, guid: e31de54db214e4a889154f0b8f597f4a, type: 3}
+  pause: {fileID: 6054749916885504479, guid: 50e4484528ad743d29472a339c9d258a, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &1603066434345821630
 GameObject:
   m_ObjectHideFlags: 0

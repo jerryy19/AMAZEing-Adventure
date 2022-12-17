@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 public class SceneNavigator : MonoBehaviour
 {
     // Start is called before the first frame update
+    GameObject player;
+    bool frompause;
     void Start()
     {
-        
+        player = GameObject.Find("BigVegas(Clone)");
+        Debug.Log("start");
+        frompause = true;
     }
 
     // Update is called once per frame
@@ -24,16 +28,54 @@ public class SceneNavigator : MonoBehaviour
     public void LoadGame() {
         SceneManager.LoadScene("Scene");
     }
-    public void LoadMenu() {
-        SceneManager.LoadScene("Menu");
+
+    public void LoadGuideAfterMenu() {
+        BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
+        player.menu.SetActive(false);
+        player.guide.SetActive(true);
     }
 
-    public void PauseGame() {
-
+    //exit out of pause
+    public void LoadGameAfterPause() {
+        BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
+        player.animation_controller.enabled = true;
+        player.health_bar.SetActive(true);
+        player.pause.SetActive(false);
+    }
+    
+    // exit out of menu
+    public void LoadGameAfterGuide() {
+        BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
+        player.animation_controller.enabled = true;
+        player.health_bar.SetActive(true);
+        player.guide.SetActive(false);
+    }
+    //menu, new game, and pause
+    public void LoadAfterSetting() {
+        BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
+        Debug.Log(player.frompause);
+        if (player.frompause) {
+            player.pause.SetActive(true);
+        } else {
+            player.menu.SetActive(true);
+        }
+        player.settings.SetActive(false);
     }
 
-    public void Setting() {
-        
+    public void LoadSettingAfterPause() {
+        BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
+        Debug.Log("setting");
+        player.frompause = true;
+        player.pause.SetActive(false);
+        player.settings.SetActive(true);
+    }
+
+    public void LoadSettingAfterMenu() {
+        BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
+        player.frompause = false;
+        Debug.Log(frompause);
+        player.menu.SetActive(false);
+        player.settings.SetActive(true);
     }
 
     public void QuitGame() {
