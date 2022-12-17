@@ -6,10 +6,12 @@ using UnityEngine;
 public class Banana : MonoBehaviour
 {
     public new Rigidbody rigidbody;
+
+    private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
-        // rigidbody.AddForce(transform.up * 100f);
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine("Countdown");
     }
 
@@ -29,9 +31,9 @@ public class Banana : MonoBehaviour
     {
         Debug.Log("hit");
         if (collision.gameObject.name == "BigVegas(Clone)") {
+            audioSource.Play();
             BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
             player.healthpoint -= 10;
-        }       
-        Destroy(transform.gameObject);
+        }
     }
 }

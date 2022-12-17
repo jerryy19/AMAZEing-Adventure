@@ -22,6 +22,8 @@ public class BigVegas : MonoBehaviour
     public GameObject settings;
     public GameObject pause;
     public GameObject menu;
+
+    private AudioSource audioSource;
     void Start()
     {
         animation_controller = GetComponent<Animator>();
@@ -42,6 +44,8 @@ public class BigVegas : MonoBehaviour
         settings.SetActive(false);
         pause.SetActive(false);
         guide.SetActive(false);
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -115,5 +119,9 @@ public class BigVegas : MonoBehaviour
         }
     }
 
+    public void PlayWalkSound()
+    {
+        audioSource.Play();
+    }
 
 }
