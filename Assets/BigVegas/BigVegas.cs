@@ -49,9 +49,9 @@ public class BigVegas : MonoBehaviour
     {   
 
         if (healthpoint < 0) {
-            Debug.Log("game ended");
+            SceneManager.LoadScene("NewGame");
         } 
-        if (Input.GetKey("p")) {
+        if (Input.GetKey("3")) {
             animation_controller.enabled = false;
             health_bar.SetActive(false);
             pause.SetActive(true);
@@ -66,8 +66,8 @@ public class BigVegas : MonoBehaviour
         bool isLeftTurn = Input.GetKey("left");
         bool isRightTurn = Input.GetKey("right");
 
-        bool isDance = Input.GetKey("r");
-        bool isSillyDance = Input.GetKey("t");
+        bool isDance = Input.GetKey("1");
+        bool isSillyDance = Input.GetKey("2");
         bool isIdlePressed = !isWalkingForwardPressed && !isWalkingBackwardPressed;
         animation_controller.SetBool("IsLeftTurn", isLeftTurn);
         animation_controller.SetBool("IsRightTurn", isRightTurn);

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
@@ -247,7 +248,9 @@ public class Main : MonoBehaviour
 
 
         if (solvedPuzzles == level.num_puzzles && checkWin()) {
+
             Debug.Log("hi");
+            SceneManager.LoadScene("StartGame");
         }
 
 
