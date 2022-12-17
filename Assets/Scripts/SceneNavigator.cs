@@ -70,10 +70,10 @@ public class SceneNavigator : MonoBehaviour
         player.settings.SetActive(true);
     }
 
+
     public void LoadSettingAfterMenu() {
         BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
         player.frompause = false;
-        Debug.Log(frompause);
         player.menu.SetActive(false);
         player.settings.SetActive(true);
     }

@@ -31,11 +31,13 @@ public class Speed : MonoBehaviour
     {
         // when player enter speed field, it slows the player down for some time
         // get player from the level
-        
-        other.gameObject.GetComponent<BigVegas>().top_speed = 3.0f;
-        GetComponent<AudioSource>().Play();
-        StartCoroutine(SpeedUp(other));
-        Debug.Log("SPEED");
+        if (other.gameObject.name == "BigVegas(Clone)") {
+            other.gameObject.GetComponent<BigVegas>().top_speed = 3.0f;
+            GetComponent<AudioSource>().Play();
+            StartCoroutine(SpeedUp(other));
+            Debug.Log("SPEED");
+        }
+
     
     }
 
