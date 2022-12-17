@@ -48,7 +48,7 @@ public class BigVegas : MonoBehaviour
     void Update()
     {   
 
-        if (healthpoint < 0) {
+        if (healthpoint <= 0) {
             SceneManager.LoadScene("NewGame");
         } 
         if (Input.GetKey("3")) {
@@ -114,5 +114,6 @@ public class BigVegas : MonoBehaviour
             character_controller.Move(movement_direction * velocity * Time.deltaTime);
         }
     }
-    
+
+
 }

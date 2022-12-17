@@ -27,6 +27,11 @@ public class Banana : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("hit");
+        if (collision.gameObject.name == "BigVegas(Clone)") {
+            BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
+            player.healthpoint -= 10;
+        }       
         Destroy(transform.gameObject);
     }
 }
