@@ -12,6 +12,7 @@ public class BigVegas : MonoBehaviour
     public float walking_velocity;
     public Text health;
     public bool frompause = true;
+    public bool losePuzzle = false;
     public float velocity;
     public float interval = 2.0f;
     public float top_speed;
@@ -27,6 +28,7 @@ public class BigVegas : MonoBehaviour
         character_controller = GetComponent<CharacterController>();
         movement_direction = new Vector3(0.0f, 0.0f, 0.0f);
         velocity = 0.0f;
+        health_bar = GameObject.Find("healthbar");
         health = health_bar.transform.GetChild(3).gameObject.GetComponent<Text>();
         healthpoint = 100;
         // change top speed to change speed
@@ -35,7 +37,7 @@ public class BigVegas : MonoBehaviour
         guide = GameObject.Find("Guide");
         settings = GameObject.Find("Settings");
         pause = GameObject.Find("PauseMenu");
-        health_bar = GameObject.Find("healthbar");
+
         health_bar.SetActive(false);
         settings.SetActive(false);
         pause.SetActive(false);
@@ -48,22 +50,22 @@ public class BigVegas : MonoBehaviour
 
         if (healthpoint < 0) {
             Debug.Log("game ended");
-        }
+        } 
         if (Input.GetKey("p")) {
             animation_controller.enabled = false;
             health_bar.SetActive(false);
             pause.SetActive(true);
             Debug.Log("pause");
         }
-
+        health.text = "100 / " + healthpoint;
         Slider slider = health_bar.GetComponent("Slider") as Slider;
         slider.value = healthpoint;
-        health.text = "100 / " + healthpoint;
+
         bool isWalkingForwardPressed = Input.GetKey("up");
         bool isWalkingBackwardPressed = Input.GetKey("down");
         bool isLeftTurn = Input.GetKey("left");
         bool isRightTurn = Input.GetKey("right");
-        //bool isRunForwardPressed = (Input.GetKey("left shift") || Input.GetKey("right shift")) && isWalkingForwardPressed;
+
         bool isDance = Input.GetKey("r");
         bool isSillyDance = Input.GetKey("t");
         bool isIdlePressed = !isWalkingForwardPressed && !isWalkingBackwardPressed;
@@ -72,7 +74,6 @@ public class BigVegas : MonoBehaviour
         animation_controller.SetBool("IsWalkingForward", isWalkingForwardPressed && velocity < 2.0f);
         animation_controller.SetBool("IsRunningForward", isWalkingForwardPressed && velocity > 2.0f);
         animation_controller.SetBool("IsWalkingBackward", isWalkingBackwardPressed);
-        //animation_controller.SetBool("IsRunForward", isRunForwardPressed && !isJumpPressed);
         animation_controller.SetBool("IsIdle", isIdlePressed);      
         animation_controller.SetBool("IsDance", isDance);      
         animation_controller.SetBool("IsSillyDance", isSillyDance);
@@ -104,7 +105,7 @@ public class BigVegas : MonoBehaviour
         if (transform.position.y > 0.0f) // if the character starts "climbing" the terrain, drop her down
         {
             Vector3 lower_character = movement_direction * velocity * Time.deltaTime;
-            lower_character.y = 0.0f; // hack to force her down
+            lower_character.y = -100.0f; // hack to force her down
             character_controller.Move(lower_character);
         }
         else

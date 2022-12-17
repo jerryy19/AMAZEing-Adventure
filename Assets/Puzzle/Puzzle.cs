@@ -77,7 +77,14 @@ public class Puzzle : MonoBehaviour
             });
             GameObject.Find("Level").GetComponent<Main>().solvedPuzzles++;
             Debug.Log(GameObject.Find("Level").GetComponent<Main>().solvedPuzzles);
-
+        }
+        if (!called && done && !success) {
+            called = true;
+            timer.set(3.0f, () => {
+                animation_controller.SetBool("solved", true);
+            });
+            GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().healthpoint -= 20;
+            
         }
 
     }

@@ -237,7 +237,9 @@ public class Main : MonoBehaviour
                         if (p.done && !p.success) {
                             p.createPuzzle(p.puzzleType);
                         }
+                        int prevScore = solvedPuzzles;
                         p.startPuzzle();
+
                     }
                 }
             }
