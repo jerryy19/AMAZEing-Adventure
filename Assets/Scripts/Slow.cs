@@ -31,6 +31,7 @@ public class Slow : MonoBehaviour
     {
         // when player enter slow field, it slows the player down for some time
         // get play from level
+        GetComponent<AudioSource>().Play();
         other.gameObject.GetComponent<BigVegas>().top_speed = 0.9f;
         StartCoroutine(SlowDown(other));
         Debug.Log("SLOW");

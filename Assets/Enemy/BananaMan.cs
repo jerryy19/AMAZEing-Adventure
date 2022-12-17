@@ -19,9 +19,12 @@ public class BananaMan : MonoBehaviour
     private bool can_see_player;
     private Vector3 originalPosition;
 
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         bananaSpeed = 350f;
         can_see_player = false;
         direction_enemy_to_player = new Vector3(0, 0, 0);
@@ -75,6 +78,7 @@ public class BananaMan : MonoBehaviour
         thrownBanana.GetComponent<Rigidbody>().AddForce(
             new Vector3(direction_to_shoot.x * bananaSpeed, Math.Abs(direction_to_shoot.y), direction_to_shoot.z * bananaSpeed)
             );
+        audioSource.Play();
     }
     private void AddAnimationEvent(string clipName, float time, string function, float param)
     {

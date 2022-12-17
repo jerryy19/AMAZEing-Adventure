@@ -33,6 +33,7 @@ public class Speed : MonoBehaviour
         // get player from the level
         
         other.gameObject.GetComponent<BigVegas>().top_speed = 3.0f;
+        GetComponent<AudioSource>().Play();
         StartCoroutine(SpeedUp(other));
         Debug.Log("SPEED");
     

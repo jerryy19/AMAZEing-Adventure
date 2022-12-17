@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -198,6 +199,10 @@ public class Main : MonoBehaviour
         sp.name = "Speed";
         sp.transform.SetParent(transform, false);
         sp.AddComponent<Speed>();
+        sp.AddComponent<AudioSource>();
+        sp.AddComponent<AudioSource>();
+        AudioClip speedSound = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Sounds/Speedup.wav", typeof(AudioClip));
+        sp.GetComponent<AudioSource>().clip = speedSound;
     }
 
 
@@ -209,6 +214,9 @@ public class Main : MonoBehaviour
         sl.name = "Slow";
         sl.transform.SetParent(transform, false);
         sl.AddComponent<Slow>();
+        sl.AddComponent<AudioSource>();
+        AudioClip slowSound = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Sounds/Slowdown.wav", typeof(AudioClip));
+        sl.GetComponent<AudioSource>().clip = slowSound;
     }
 
     // instantiate mystery zone (shows enemies when standing on it)
@@ -218,7 +226,10 @@ public class Main : MonoBehaviour
         m.transform.position = pos + new Vector3(0.0f, -0.05f, 0.0f);
         m.name = "Mystery";
         m.transform.SetParent(transform, false);
-        m.AddComponent<Mystery>(); 
+        m.AddComponent<Mystery>();
+        m.AddComponent<AudioSource>();
+        AudioClip mysterySound = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Sounds/Mystery.wav", typeof(AudioClip));
+        m.GetComponent<AudioSource>().clip = mysterySound;
     }
 
     // Update is called once per frame

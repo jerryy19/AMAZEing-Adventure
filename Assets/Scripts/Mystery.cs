@@ -46,8 +46,10 @@ public class Mystery : MonoBehaviour
         // when player enter mystery field, it shows where enemies are
         // get player from the level
         Debug.Log("MYSTERY");
-        if (other.name == "BigVegas(Clone)")
+        if (other.name == "BigVegas(Clone)") {
             renderFeatures[0].SetActive(true);
+            GetComponent<AudioSource>().Play();
+        }
     }
     private void OnTriggerExit(Collider other)
     {
