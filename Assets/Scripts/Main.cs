@@ -218,7 +218,7 @@ public class Main : MonoBehaviour
         m.transform.position = pos + new Vector3(0.0f, -0.05f, 0.0f);
         m.name = "Mystery";
         m.transform.SetParent(transform, false);
-        m.AddComponent<Mystery>();
+        m.AddComponent<Mystery>(); 
     }
 
     // Update is called once per frame

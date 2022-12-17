@@ -9,7 +9,7 @@ public class Banana : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody.AddForce(transform.up * 100f);
+        // rigidbody.AddForce(transform.up * 100f);
         StartCoroutine("Countdown");
     }
 
@@ -21,7 +21,12 @@ public class Banana : MonoBehaviour
 
     IEnumerator Countdown()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(2.1f);
+        Destroy(transform.gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
         Destroy(transform.gameObject);
     }
 }

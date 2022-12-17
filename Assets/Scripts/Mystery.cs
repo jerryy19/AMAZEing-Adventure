@@ -26,7 +26,7 @@ public class Mystery : MonoBehaviour
         ScriptableRenderer renderer = pipelineAsset.GetRenderer(0);
         var property = typeof(ScriptableRenderer).GetProperty("rendererFeatures", BindingFlags.NonPublic | BindingFlags.Instance);
         renderFeatures = property.GetValue(renderer) as List<ScriptableRendererFeature>;
-        
+        renderFeatures[0].SetActive(false);
 
         Bounds bounds = GetComponent<Collider>().bounds;
         bounds.size *= 0.2f;
@@ -46,7 +46,8 @@ public class Mystery : MonoBehaviour
         // when player enter mystery field, it shows where enemies are
         // get player from the level
         Debug.Log("MYSTERY");
-        renderFeatures[0].SetActive(true);
+        if (other.name == "BigVegas(Clone)")
+            renderFeatures[0].SetActive(true);
     }
     private void OnTriggerExit(Collider other)
     {
