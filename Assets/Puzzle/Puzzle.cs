@@ -95,9 +95,6 @@ public class Puzzle : MonoBehaviour
             _audioSource.clip = failedSound;
             _audioSource.Play();
             called = true;
-            timer.set(3.0f, () => {
-                animation_controller.SetBool("solved", true);
-            });
             GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().healthpoint -= 20;
             
         }
@@ -107,7 +104,7 @@ public class Puzzle : MonoBehaviour
     public void startPuzzle() {
         p.SetActive(true);
     }
-
+                        
     public void createPuzzle() {
         puzzleType = (PuzzleType) Random.Range(0, num_puzzlesTypes);
         createPuzzle(puzzleType);

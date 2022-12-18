@@ -28,10 +28,10 @@ public class Config : MonoBehaviour
             bv.menu.SetActive(false);
             bv.guide.SetActive(true);
         }
-        if (player != null) {
-            fromnewgame = false;
-        } else {
+        if (GameObject.Find("NewGame") != null) {
             fromnewgame = true;
+        } else {
+            fromnewgame = false;
         }
     }
 }
