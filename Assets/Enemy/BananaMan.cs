@@ -135,7 +135,7 @@ public class BananaMan : MonoBehaviour
     IEnumerator ThrowingSequence()
     {
         while (true) {
-            if (can_see_player)
+            if (can_see_player && GameObject.Find("healthbar") != null)
             {
                 animator.SetBool("isIdle", false);
                 animator.SetBool("isThrowing", true);
