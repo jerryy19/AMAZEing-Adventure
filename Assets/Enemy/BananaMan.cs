@@ -57,7 +57,7 @@ public class BananaMan : MonoBehaviour
                 transform.eulerAngles = new Vector3(0.0f, angle_to_rotate, 0.0f);
                 can_see_player = true;
             }
-            else
+            else if (GameObject.Find("healthbar") == null)
             {
                 can_see_player = false;
                 animator.SetBool("isIdle", true);
