@@ -271,7 +271,10 @@ public class WordMemoryGameScript : MonoBehaviour
             Debug.Log(string.Join("\n", toRemember.ToArray()));
         }
 
-        if (i == 0) gameObject.SetActive(false);
+        if (i == 0) {
+            gameObject.SetActive(false);
+            GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().health_bar.SetActive(true);
+        }
     }
 
 }

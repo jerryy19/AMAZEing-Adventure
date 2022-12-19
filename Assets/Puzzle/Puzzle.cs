@@ -91,6 +91,7 @@ public class Puzzle : MonoBehaviour
             });
             GameObject.Find("Level").GetComponent<Main>().solvedPuzzles++;
             Debug.Log(GameObject.Find("Level").GetComponent<Main>().solvedPuzzles);
+            GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().health_bar.SetActive(true);
         }
 
 
@@ -100,9 +101,8 @@ public class Puzzle : MonoBehaviour
             _audioSource.Play();
             called = true;
             GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().healthpoint -= 20;
-            
+            GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().health_bar.SetActive(true);
         }
-
     }
 
     public void startPuzzle() {
