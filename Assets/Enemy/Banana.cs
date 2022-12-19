@@ -7,10 +7,13 @@ public class Banana : MonoBehaviour
 {
     public new Rigidbody rigidbody;
 
+    private int hitCounter; 
+
     private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
+        hitCounter = 0;
         audioSource = GetComponent<AudioSource>();
         StartCoroutine("Countdown");
     }
@@ -30,7 +33,9 @@ public class Banana : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("hit");
-        if (collision.gameObject.name == "BigVegas(Clone)") {
+        if (collision.gameObject.name == "BigVegas(Clone)" && hitCounter == 0)
+        {
+            hitCounter++;
             audioSource.Play();
             BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
             player.healthpoint -= 10;
