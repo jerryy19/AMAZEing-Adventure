@@ -35,7 +35,6 @@ public class Speed : MonoBehaviour
             other.gameObject.GetComponent<BigVegas>().top_speed = 3.0f;
             GetComponent<AudioSource>().Play();
             StartCoroutine(SpeedUp(other));
-            Debug.Log("SPEED");
         }
 
     
@@ -45,6 +44,5 @@ public class Speed : MonoBehaviour
         
         yield return new WaitForSeconds(3.0f);
         other.gameObject.GetComponent<BigVegas>().top_speed = 1.5f;
-        Debug.Log(other.gameObject.GetComponent<BigVegas>().top_speed);
     }
 }

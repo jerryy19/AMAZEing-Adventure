@@ -35,7 +35,6 @@ public class Slow : MonoBehaviour
             GetComponent<AudioSource>().Play();
             other.gameObject.GetComponent<BigVegas>().top_speed = 0.9f;
             StartCoroutine(SlowDown(other));
-            Debug.Log("SLOW");
         }
 
     }
