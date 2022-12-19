@@ -105,9 +105,8 @@ public class Main : MonoBehaviour
             }
         }
 
-
-        playerObj = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        playerObj.transform.position = new Vector3(level.playerStart.x * 2, 0, level.playerStart.y * 2);
+        Vector3 playerPos = new Vector3(level.playerStart.x * 2, 0, level.playerStart.y * 2);
+        playerObj = Instantiate(playerPrefab, playerPos, Quaternion.identity);
 
 
     }
@@ -249,7 +248,7 @@ public class Main : MonoBehaviour
                         if (p.done && !p.success) {
                             p.createPuzzle(p.puzzleType);
                         }
-                        int prevScore = solvedPuzzles;
+                        GameObject.Find("healthbar").SetActive(false);
                         p.startPuzzle();
 
                     }
@@ -257,16 +256,16 @@ public class Main : MonoBehaviour
             }
         }
 
-
+        // win condition
         if (solvedPuzzles == level.num_puzzles && checkWin()) {
 
-            Debug.Log("hi");
             SceneManager.LoadScene("StartGame");
         }
 
 
     }
 
+    // if player is on the winning block
     bool checkWin() {
         int x = (int)Mathf.Floor(playerObj.transform.position.x / 2);
         int z = (int)Mathf.Floor(playerObj.transform.position.z / 2);

@@ -267,6 +267,7 @@ public class Level {
 
     }
 
+    // used to connect all paths
     List<Vertex<int>> dijkstra(Graph<int> graph, int source, int dest) {
         Vertex<int> sourceNode = new Vertex<int>(source);
         Vertex<int> destNode = new Vertex<int>(dest);
@@ -399,6 +400,7 @@ public class Level {
         return areWeConsistent;
     }
 
+    // in a 3x3 grid, no more than 5 walls
     bool NoLargeWallChunks(List<TileType>[,] grid) {
         int[,] adj = new int[8, 2] {
             {-1, -1}, {-1, 0}, {-1, 1},
@@ -479,6 +481,7 @@ public class Level {
         return false;
     }
 
+    // no slow or speed within 2 block radius of each other
     bool SpeedSlowWithinRadius2(List<TileType>[,] grid) {
         if (!radiusCheckNoTileType(grid, 2, TileType.SPEED, TileType.SLOW)) {
             return false;
