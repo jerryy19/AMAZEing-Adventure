@@ -34,7 +34,6 @@ public class SceneNavigator : MonoBehaviour
         player.guide.SetActive(true);
     }
 
-    //exit out of pause
     public void LoadGameAfterPause() {
         BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
         player.animation_controller.enabled = true;
@@ -42,14 +41,14 @@ public class SceneNavigator : MonoBehaviour
         player.pause.SetActive(false);
     }
     
-    // exit out of menu
+
     public void LoadGameAfterGuide() {
         BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
         player.animation_controller.enabled = true;
         player.health_bar.SetActive(true);
         player.guide.SetActive(false);
     }
-    //menu, new game, and pause
+
     public void LoadAfterSetting() {
         BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
         if (player.frompause) {

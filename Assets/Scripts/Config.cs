@@ -10,11 +10,9 @@ public class Config : MonoBehaviour
     public GameObject player;
     public float volume = 0.0f;
 
-    private Timer timer;
     // add volume configuration
     void Awake()
     {
-
         DontDestroyOnLoad(this.gameObject);
     }
     void Start()
@@ -25,8 +23,6 @@ public class Config : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer = GetComponent<Timer>();
-
         //update sound configuration if change
         GameObject player = GameObject.Find("BigVegas(Clone)");
         GameObject settings = GameObject.Find("VolumeScrollbar");

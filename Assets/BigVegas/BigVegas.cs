@@ -56,24 +56,27 @@ public class BigVegas : MonoBehaviour
         if (healthpoint <= 0) {
             SceneManager.LoadScene("NewGame");
         } 
-        if (Input.GetKey("3")) {
+        if (Input.GetKey("3") && health_bar.activeSelf == true) {
             animation_controller.enabled = false;
             health_bar.SetActive(false);
             pause.SetActive(true);
             Debug.Log("pause");
         }
+        // adjest health
         health.text =  healthpoint  + " / 100";
         Slider slider = health_bar.GetComponent("Slider") as Slider;
         slider.value = healthpoint;
 
+        //input key
         bool isWalkingForwardPressed = Input.GetKey("up");
         bool isWalkingBackwardPressed = Input.GetKey("down");
         bool isLeftTurn = Input.GetKey("left");
         bool isRightTurn = Input.GetKey("right");
-
         bool isDance = Input.GetKey("1");
         bool isSillyDance = Input.GetKey("2");
         bool isIdlePressed = !isWalkingForwardPressed && !isWalkingBackwardPressed;
+
+        //animations
         animation_controller.SetBool("IsLeftTurn", isLeftTurn);
         animation_controller.SetBool("IsRightTurn", isRightTurn);
         animation_controller.SetBool("IsWalkingForward", isWalkingForwardPressed && velocity < 2.0f);
@@ -83,6 +86,7 @@ public class BigVegas : MonoBehaviour
         animation_controller.SetBool("IsDance", isDance);      
         animation_controller.SetBool("IsSillyDance", isSillyDance);
 
+        //speed based on animation
         if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingForward")) {
             if (velocity <= top_speed) {
                 velocity += (top_speed) / interval;

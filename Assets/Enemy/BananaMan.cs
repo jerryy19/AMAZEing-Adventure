@@ -53,12 +53,14 @@ public class BananaMan : MonoBehaviour
         {
             if (hit.collider.gameObject == player)
             {
+                
                 float angle_to_rotate = Mathf.Rad2Deg * Mathf.Atan2(direction_enemy_to_player.x, direction_enemy_to_player.z);
                 transform.eulerAngles = new Vector3(0.0f, angle_to_rotate, 0.0f);
                 can_see_player = true;
             }
-            else if (GameObject.Find("healthbar") == null)
+            else
             {
+                            
                 can_see_player = false;
                 animator.SetBool("isIdle", true);
                 animator.SetBool("isThrowing", false);
@@ -68,17 +70,20 @@ public class BananaMan : MonoBehaviour
 
     private void ThrowBanana()
     {
-        Vector3 bananaPos = hand.position;
-        Quaternion bananaRot = hand.rotation;
-        GameObject thrownBanana = (GameObject)GameObject.Instantiate(banana, bananaPos, transform.rotation);
-        Vector3 direction_banana_to_player = player.GetComponent<CapsuleCollider>().bounds.center - thrownBanana.GetComponent<CapsuleCollider>().bounds.center;
-        direction_banana_to_player.Normalize();
-        Vector3 direction_to_shoot = PredictShootingDirection(direction_banana_to_player,
-            thrownBanana.GetComponent<CapsuleCollider>().bounds.center);
-        thrownBanana.GetComponent<Rigidbody>().AddForce(
-            new Vector3(direction_to_shoot.x * bananaSpeed, Math.Abs(direction_to_shoot.y), direction_to_shoot.z * bananaSpeed)
-            );
-        audioSource.Play();
+        if (GameObject.Find("healthbar") != null) {
+            Vector3 bananaPos = hand.position;
+            Quaternion bananaRot = hand.rotation;
+            GameObject thrownBanana = (GameObject)GameObject.Instantiate(banana, bananaPos, transform.rotation);
+            Vector3 direction_banana_to_player = player.GetComponent<CapsuleCollider>().bounds.center - thrownBanana.GetComponent<CapsuleCollider>().bounds.center;
+            direction_banana_to_player.Normalize();
+            Vector3 direction_to_shoot = PredictShootingDirection(direction_banana_to_player,
+                thrownBanana.GetComponent<CapsuleCollider>().bounds.center);
+            thrownBanana.GetComponent<Rigidbody>().AddForce(
+                new Vector3(direction_to_shoot.x * bananaSpeed, Math.Abs(direction_to_shoot.y), direction_to_shoot.z * bananaSpeed)
+                );
+            audioSource.Play();
+        }
+
     }
     private void AddAnimationEvent(string clipName, float time, string function, float param)
     {
