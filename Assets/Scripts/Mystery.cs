@@ -8,7 +8,6 @@ using UnityEngine.Rendering.Universal;
 public class Mystery : MonoBehaviour
 {
     GameObject level;
-    Collider c;
 
     private List<ScriptableRendererFeature> renderFeatures; 
     [SerializeField]
@@ -19,8 +18,6 @@ public class Mystery : MonoBehaviour
     void Start()
     {
         level = GameObject.Find("Level");
-        // c = gameObject.AddComponent<Collider>();
-        // c.isTrigger = true;
 
         pipelineAsset = (UniversalRenderPipelineAsset)AssetDatabase.LoadAssetAtPath("Assets/URP Asset.asset", typeof(UniversalRenderPipelineAsset));
         ScriptableRenderer renderer = pipelineAsset.GetRenderer(0);
@@ -51,6 +48,7 @@ public class Mystery : MonoBehaviour
             GetComponent<AudioSource>().Play();
         }
     }
+    
     private void OnTriggerExit(Collider other)
     {
         renderFeatures[0].SetActive(false);

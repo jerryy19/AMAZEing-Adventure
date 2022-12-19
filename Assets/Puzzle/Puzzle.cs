@@ -15,22 +15,23 @@ public enum PuzzleType
 
 public class Puzzle : MonoBehaviour
 {
+    // puzzle prefabs
     public GameObject typingPrefab;
     public GameObject wordPrefab;
     public GameObject fourdlePrefab;
     public GameObject fillPrefab;
     public GameObject scramblePrefab;
 
-    private Animator animation_controller;
+    private Animator animation_controller;      // puzzle anim
     public int num_puzzlesTypes = 5;
     public PuzzleType puzzleType;
     GameObject p = null;
     private Timer timer;
 
-    bool called;                // check if update method already called this method
-    public bool done;           // did user finish puzzle (success or fail)
-    public bool success;        // did user succeed in solving puzzle
-    public bool interactable;   // if succeed in solving puzzle, then this puzzle is no longer interactable
+    bool called;                                // check if update method already called this method
+    public bool done;                           // did user finish puzzle (success or fail)
+    public bool success;                        // did user succeed in solving puzzle
+    public bool interactable;                   // if succeed in solving puzzle, then this puzzle is no longer interactable
 
     private AudioSource _audioSource;
     private AudioClip solvedSound;
@@ -79,8 +80,8 @@ public class Puzzle : MonoBehaviour
                 break;
         }
         
-        if (!called && done && success)
-        {
+        // if success
+        if (!called && done && success) {
             _audioSource.clip = solvedSound;
             _audioSource.Play();
             called = true;
@@ -91,6 +92,9 @@ public class Puzzle : MonoBehaviour
             GameObject.Find("Level").GetComponent<Main>().solvedPuzzles++;
             Debug.Log(GameObject.Find("Level").GetComponent<Main>().solvedPuzzles);
         }
+
+
+        // if fail
         if (!called && done && !success) {
             _audioSource.clip = failedSound;
             _audioSource.Play();

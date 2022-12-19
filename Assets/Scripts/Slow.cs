@@ -5,14 +5,11 @@ using UnityEngine;
 public class Slow : MonoBehaviour
 {
     GameObject level;
-    //Collider c;
 
     // Start is called before the first frame update
     void Start()
     {
         level = GameObject.Find("Level");
-        //c = gameObject.AddComponent<Collider>();
-        //c.isTrigger = true;
 
         Bounds bounds = GetComponent<Collider>().bounds;
         bounds.size *= 0.2f;

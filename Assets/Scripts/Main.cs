@@ -256,16 +256,16 @@ public class Main : MonoBehaviour
             }
         }
 
-
+        // win condition
         if (solvedPuzzles == level.num_puzzles && checkWin()) {
 
-            Debug.Log("hi");
             SceneManager.LoadScene("StartGame");
         }
 
 
     }
 
+    // if player is on the winning block
     bool checkWin() {
         int x = (int)Mathf.Floor(playerObj.transform.position.x / 2);
         int z = (int)Mathf.Floor(playerObj.transform.position.z / 2);
