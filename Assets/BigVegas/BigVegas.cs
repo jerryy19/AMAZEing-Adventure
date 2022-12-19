@@ -71,7 +71,7 @@ public class BigVegas : MonoBehaviour
 
         //input key
         bool isWalkingForwardPressed = Input.GetKey("up");
-        bool isWalkingBackwardPressed = Input.GetKey("down");
+        bool isWalkingBackwardPressed = Input.GetKey("down") && transform.position.z > 0;
         bool isLeftTurn = Input.GetKey("left");
         bool isRightTurn = Input.GetKey("right");
         bool isDance = Input.GetKey("1");
@@ -123,7 +123,7 @@ public class BigVegas : MonoBehaviour
         else 
         {   
             if (transform.position.z <= 0 || transform.position.z >= level.length * 2) {
-                movement_direction.z = 2f;
+                movement_direction.z = 0.5f;
             }
 
 

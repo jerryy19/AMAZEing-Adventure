@@ -8,7 +8,7 @@ public class Config : MonoBehaviour
     // Start is called before the first frame update
     public bool fromnewgame = false;
     public GameObject player;
-    public float volume = 0.0f;
+    public float volume = 0.3f;
 
     // add volume configuration
     void Awake()
@@ -47,10 +47,11 @@ public class Config : MonoBehaviour
     }
     IEnumerator ExampleCoroutine(BigVegas bv)
     {
-
-        //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(1);
         bv.menu.SetActive(false);
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(.001f);
+
+
 
     }
 }
