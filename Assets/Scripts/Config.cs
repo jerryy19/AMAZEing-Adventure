@@ -9,6 +9,8 @@ public class Config : MonoBehaviour
     public bool fromnewgame = false;
     public GameObject player;
     public float volume = 0.0f;
+
+    private Timer timer;
     // add volume configuration
     void Awake()
     {
@@ -23,7 +25,7 @@ public class Config : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        timer = GetComponent<Timer>();
 
         //update sound configuration if change
         GameObject player = GameObject.Find("BigVegas(Clone)");
@@ -32,7 +34,7 @@ public class Config : MonoBehaviour
             BigVegas bv = player.GetComponent<BigVegas>();
             bv.settings.GetComponentInChildren<Scrollbar>().value = volume;
             AudioListener.volume = volume;
-            bv.menu.SetActive(false);
+            ExampleCoroutine(bv);
             bv.guide.SetActive(true);
         }
         if (GameObject.Find("NewGame") != null) {
@@ -45,6 +47,14 @@ public class Config : MonoBehaviour
             AudioListener.volume = volume;
         }
 
+
+    }
+    IEnumerator ExampleCoroutine(BigVegas bv)
+    {
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(1);
+        bv.menu.SetActive(false);
 
     }
 }

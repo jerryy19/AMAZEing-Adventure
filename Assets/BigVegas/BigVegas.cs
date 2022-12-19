@@ -62,7 +62,7 @@ public class BigVegas : MonoBehaviour
             pause.SetActive(true);
             Debug.Log("pause");
         }
-        health.text = "100 / " + healthpoint;
+        health.text =  healthpoint  + " / 100";
         Slider slider = health_bar.GetComponent("Slider") as Slider;
         slider.value = healthpoint;
 
