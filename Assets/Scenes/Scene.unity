@@ -218,6 +218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fromnewgame: 0
+  player: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!4 &227933928
 Transform:
   m_ObjectHideFlags: 0
@@ -1813,6 +1815,10 @@ PrefabInstance:
     - target: {fileID: 3229929625153360654, guid: e31de54db214e4a889154f0b8f597f4a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 84
+      objectReference: {fileID: 0}
+    - target: {fileID: 3229929625153360655, guid: e31de54db214e4a889154f0b8f597f4a, type: 3}
+      propertyPath: m_Name
+      value: VolumeScrollbar
       objectReference: {fileID: 0}
     - target: {fileID: 3229929625297910647, guid: e31de54db214e4a889154f0b8f597f4a, type: 3}
       propertyPath: m_AnchoredPosition.y

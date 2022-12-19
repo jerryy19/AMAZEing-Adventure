@@ -237,7 +237,7 @@ public class Main : MonoBehaviour
     {
 
         // INTERACT WITH PUZZLE
-        if (Input.GetMouseButtonDown(0)) {
+        if (GameObject.Find("healthbar") != null && Input.GetMouseButtonDown(0)) {
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

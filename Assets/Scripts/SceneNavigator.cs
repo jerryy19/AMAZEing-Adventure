@@ -11,7 +11,6 @@ public class SceneNavigator : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("BigVegas(Clone)");
-        Debug.Log("start");
         frompause = true;
     }
 
@@ -53,7 +52,6 @@ public class SceneNavigator : MonoBehaviour
     //menu, new game, and pause
     public void LoadAfterSetting() {
         BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
-        Debug.Log(player.frompause);
         if (player.frompause) {
             player.pause.SetActive(true);
         } else {
@@ -64,7 +62,6 @@ public class SceneNavigator : MonoBehaviour
 
     public void LoadSettingAfterPause() {
         BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
-        Debug.Log("setting");
         player.frompause = true;
         player.pause.SetActive(false);
         player.settings.SetActive(true);

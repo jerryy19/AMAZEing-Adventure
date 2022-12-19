@@ -28,6 +28,7 @@ public class BigVegas : MonoBehaviour
     {
         animation_controller = GetComponent<Animator>();
         character_controller = GetComponent<CharacterController>();
+        animation_controller.enabled = false;
         movement_direction = new Vector3(0.0f, 0.0f, 0.0f);
         velocity = 0.0f;
         health_bar = GameObject.Find("healthbar");
