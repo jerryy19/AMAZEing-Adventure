@@ -7,11 +7,9 @@ public class SceneNavigator : MonoBehaviour
 {
     // Start is called before the first frame update
     GameObject player;
-    bool frompause;
     void Start()
     {
         player = GameObject.Find("BigVegas(Clone)");
-        frompause = true;
     }
 
     // Update is called once per frame

@@ -105,9 +105,8 @@ public class Main : MonoBehaviour
             }
         }
 
-
-        playerObj = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        playerObj.transform.position = new Vector3(level.playerStart.x * 2, 0, level.playerStart.y * 2);
+        Vector3 playerPos = new Vector3(level.playerStart.x * 2, 0, level.playerStart.y * 2);
+        playerObj = Instantiate(playerPrefab, playerPos, Quaternion.identity);
 
 
     }
