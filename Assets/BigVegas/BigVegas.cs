@@ -23,6 +23,8 @@ public class BigVegas : MonoBehaviour
     public GameObject pause;
     public GameObject menu;
 
+    public Level level;
+
     private AudioSource audioSource;
     void Start()
     {
@@ -40,12 +42,12 @@ public class BigVegas : MonoBehaviour
         guide = GameObject.Find("Guide");
         settings = GameObject.Find("Settings");
         pause = GameObject.Find("PauseMenu");
-
+        level = GameObject.Find("Level").GetComponent<Main>().level;
         health_bar.SetActive(false);
         settings.SetActive(false);
         pause.SetActive(false);
         guide.SetActive(false);
-
+        Debug.Log(level);
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -111,16 +113,23 @@ public class BigVegas : MonoBehaviour
         float zdirection = Mathf.Cos(Mathf.Deg2Rad * transform.rotation.eulerAngles.y);
         movement_direction = new Vector3(xdirection, 0.0f, zdirection);
 
+
         if (transform.position.y > 0.0f) // if the character starts "climbing" the terrain, drop her down
         {
             Vector3 lower_character = movement_direction * velocity * Time.deltaTime;
             lower_character.y = -100.0f; // hack to force her down
             character_controller.Move(lower_character);
         }
-        else
-        {
-            movement_direction.y -= 9.8f * Time.deltaTime;	
+        else 
+        {   
+            if (transform.position.z <= 0 || transform.position.z >= level.length * 2) {
+                movement_direction.z = 2f;
+            }
+
+
+            
             character_controller.Move(movement_direction * velocity * Time.deltaTime);
+
         }
     }
 
