@@ -1,1 +1,0 @@
-https://forum.unity.com/threads/how-to-get-access-to-renderer-features-at-runtime.1193572/
