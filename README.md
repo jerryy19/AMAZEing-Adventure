@@ -25,14 +25,28 @@ the environment provided and avoiding obstacles.
 All animations will be keyframe animated.
 
 ## User interface and sound
-TODO
+We will have main, pause, settings, tutorial menus. We will have a healthbar for player model
+that takes damage from puzzle and from enemies. There will be sounds for certain zones, player 
+movement and enemy interaction. 
 
 ## Rough breakdown of the tasks each group member focused on
 Liam Brandwein
 - work on robot, sfx, mystery tile npc
 
 Jia Hui Yu
-- puzzle and maze design
+- Most of Main.cs
+- Level.cs
+- Graph.cs
+- Puzzle.cs
+- Puzzle UIs and game logic scripts
+- PriorityQueue.cs
+- Timer.cs
   
 Alan Zheng
 -  menus, character animation FSM, player health
+
+## External References
+https://forum.unity.com/threads/how-to-get-access-to-renderer-features-at-runtime.1193572/
+giraffe asset is from https://www.cgtrader.com/free-3d-models/animals/mammal/giraffa-puzzle
+building assets are from https://assetstore.unity.com/packages/3d/environments/urban/city-voxel-pack-136141
+Timer script is adapted from https://www.youtube.com/watch?v=3ZfwqWl-YI0
