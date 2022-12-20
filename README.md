@@ -43,10 +43,20 @@ Jia Hui Yu
 - Timer.cs
   
 Alan Zheng
--  menus, character animation FSM, player health
+- BigVegas.cs 
+- Animation controller for player and its functionality
+- Healtbar and its functionality
+- The following UIs: Menu, PauseMenu, Guide, Settings, NewGame, Tutorial
+- implmented the transitioning and functionality of the UI
+- Implemented the NewGame, StartGame, and Tutorial scene
+- Config.cs
+- SceneNavigator.cs
+- implemented the change of speed of player in Speed.cs and Slow.cs
 
 ## External References
 https://forum.unity.com/threads/how-to-get-access-to-renderer-features-at-runtime.1193572/
 giraffe asset is from https://www.cgtrader.com/free-3d-models/animals/mammal/giraffa-puzzle
 building assets are from https://assetstore.unity.com/packages/3d/environments/urban/city-voxel-pack-136141
 Timer script is adapted from https://www.youtube.com/watch?v=3ZfwqWl-YI0
+Big vegas model is from https://www.mixamo.com/#/?page=1&query=big&type=Character
+Healthbar asset is inspired by https://www.youtube.com/watch?v=BLfNP4Sc_iA
