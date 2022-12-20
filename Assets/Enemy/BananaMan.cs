@@ -49,22 +49,20 @@ public class BananaMan : MonoBehaviour
         direction_enemy_to_player = (player_centroid - bananaman_centroid);
         direction_enemy_to_player.Normalize();
         RaycastHit hit;
-        if (Physics.Raycast(bananaman_centroid, direction_enemy_to_player, out hit, 6f))
+        if (Physics.Raycast(bananaman_centroid, direction_enemy_to_player, out hit, 4f))
         {
             if (hit.collider.gameObject == player)
             {
-                
                 float angle_to_rotate = Mathf.Rad2Deg * Mathf.Atan2(direction_enemy_to_player.x, direction_enemy_to_player.z);
                 transform.eulerAngles = new Vector3(0.0f, angle_to_rotate, 0.0f);
                 can_see_player = true;
             }
-            else
-            {
-                            
-                can_see_player = false;
-                animator.SetBool("isIdle", true);
-                animator.SetBool("isThrowing", false);
-            }
+        }
+        else
+        {
+            can_see_player = false;
+            animator.SetBool("isIdle", true);
+            animator.SetBool("isThrowing", false);
         }
     }
 

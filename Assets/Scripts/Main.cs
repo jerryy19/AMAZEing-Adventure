@@ -116,8 +116,8 @@ public class Main : MonoBehaviour
         winBlock.AddComponent<WinBlock>();
         winBlock.AddComponent<AudioSource>();
         winBlock.AddComponent<AudioSource>();
-        // AudioClip speedSound = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Sounds/Speedup.wav", typeof(AudioClip));
-        // winBlock.GetComponent<AudioSource>().clip = speedSound;
+        AudioClip winSound = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Sounds/Victory.wav", typeof(AudioClip));
+        winBlock.GetComponent<AudioSource>().clip = winSound;
 
     }
 

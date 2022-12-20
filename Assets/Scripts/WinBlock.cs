@@ -35,7 +35,7 @@ public class WinBlock : MonoBehaviour
 
             // win condition
             if (m.solvedPuzzles == m.level.num_puzzles) {
-
+                // GetComponent<AudioSource>().Play();
                 SceneManager.LoadScene("StartGame");
             } else {
                 StartCoroutine(displayPuzzlesLeft());
