@@ -72,7 +72,7 @@ public class BigVegas : MonoBehaviour
         //input key
         if (health_bar.activeSelf) {
             bool isWalkingForwardPressed = Input.GetKey("up") || Input.GetKey("w");
-            bool isWalkingBackwardPressed = (Input.GetKey("down") || Input.GetKey("s")) && transform.position.z > 0;
+            bool isWalkingBackwardPressed = Input.GetKey("down") || Input.GetKey("s");
             bool isLeftTurn = Input.GetKey("left");
             bool isRightTurn = Input.GetKey("right");
             bool isDance = Input.GetKey("1");
@@ -122,16 +122,10 @@ public class BigVegas : MonoBehaviour
                 character_controller.Move(lower_character);
             }
             else 
-            {   
-                if (transform.position.z <= 0 || transform.position.z >= level.length * 2) {
-                    movement_direction.z = 0.5f;
-                }
-
-
-                
+            {                   
                 character_controller.Move(movement_direction * velocity * Time.deltaTime);
-
             }
+            
         } else {
             animation_controller.SetBool("IsLeftTurn", false);
             animation_controller.SetBool("IsRightTurn", false);
