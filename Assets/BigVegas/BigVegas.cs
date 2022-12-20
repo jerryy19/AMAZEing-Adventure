@@ -61,7 +61,6 @@ public class BigVegas : MonoBehaviour
             animation_controller.enabled = false;
             health_bar.SetActive(false);
             pause.SetActive(true);
-            Debug.Log("pause");
         }
         // adjest health
         health.text =  healthpoint  + " / 100";

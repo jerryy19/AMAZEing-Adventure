@@ -277,11 +277,6 @@ public class Main : MonoBehaviour
         Debug.Log(level.playerGoal.x + " " + level.playerGoal.y);
         return level.playerGoal.x == x && level.playerGoal.y == z;
     }
-    IEnumerator Coroutine() {
 
-
-        yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("StartGame");
-    }
 
 }

@@ -30,8 +30,8 @@ public class Config : MonoBehaviour
             BigVegas bv = player.GetComponent<BigVegas>();
             bv.settings.GetComponentInChildren<Scrollbar>().value = volume;
             AudioListener.volume = volume;
-            ExampleCoroutine(bv);
-            bv.guide.SetActive(true);
+            StartCoroutine(ExampleCoroutine(bv));
+
         }
         if (GameObject.Find("NewGame") != null) {
             fromnewgame = true;
@@ -47,11 +47,9 @@ public class Config : MonoBehaviour
     }
     IEnumerator ExampleCoroutine(BigVegas bv)
     {
-        bv.menu.SetActive(false);
-        //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(.001f);
-
-
+        bv.menu.SetActive(false);
+        bv.guide.SetActive(true);
 
     }
 }
