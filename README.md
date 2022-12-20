@@ -31,7 +31,12 @@ movement and enemy interaction.
 
 ## Rough breakdown of the tasks each group member focused on
 Liam Brandwein
-- work on robot, sfx, mystery tile npc
+- BananaMan.cs
+- Banana.cs
+- Robot FSM
+- Robot functionality
+- SFX
+- Blue mystery tile
 
 Jia Hui Yu
 - Most of Main.cs
@@ -56,6 +61,7 @@ Alan Zheng
 
 ## External References
 - https://forum.unity.com/threads/how-to-get-access-to-renderer-features-at-runtime.1193572/
+- https://forum.unity.com/threads/how-to-calculate-force-needed-to-jump-towards-target-point.372288/
 - giraffe asset is from https://www.cgtrader.com/free-3d-models/animals/mammal/giraffa-puzzle
 - building assets are from https://assetstore.unity.com/packages/3d/environments/urban/city-voxel-pack-136141
 - Timer script is adapted from https://www.youtube.com/watch?v=3ZfwqWl-YI0
