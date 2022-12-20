@@ -52,6 +52,7 @@ Alan Zheng
 - Config.cs
 - SceneNavigator.cs
 - implemented the change of speed of player in Speed.cs and Slow.cs
+- implemented volume change in settings
 
 ## External References
 https://forum.unity.com/threads/how-to-get-access-to-renderer-features-at-runtime.1193572/
