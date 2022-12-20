@@ -127,12 +127,13 @@ public class BigVegas : MonoBehaviour
             }
             
         } else {
+            animation_controller.SetBool("IsIdle", true);      
+            velocity = 0;
             animation_controller.SetBool("IsLeftTurn", false);
             animation_controller.SetBool("IsRightTurn", false);
             animation_controller.SetBool("IsWalkingForward", false);
             animation_controller.SetBool("IsRunningForward", false);
             animation_controller.SetBool("IsWalkingBackward", false);
-            animation_controller.SetBool("IsIdle", false);      
             animation_controller.SetBool("IsDance", false);      
             animation_controller.SetBool("IsSillyDance", false);
         }
