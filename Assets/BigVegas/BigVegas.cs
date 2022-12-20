@@ -69,67 +69,73 @@ public class BigVegas : MonoBehaviour
         slider.value = healthpoint;
 
         //input key
-        bool isWalkingForwardPressed = Input.GetKey("up");
-        bool isWalkingBackwardPressed = Input.GetKey("down") && transform.position.z > 0;
-        bool isLeftTurn = Input.GetKey("left");
-        bool isRightTurn = Input.GetKey("right");
-        bool isDance = Input.GetKey("1");
-        bool isSillyDance = Input.GetKey("2");
-        bool isIdlePressed = !isWalkingForwardPressed && !isWalkingBackwardPressed;
+        if (health_bar.activeSelf) {
+            bool isWalkingForwardPressed = Input.GetKey("up") || Input.GetKey("w");
+            bool isWalkingBackwardPressed = Input.GetKey("down") || Input.GetKey("s");
+            bool isLeftTurn = Input.GetKey("left");
+            bool isRightTurn = Input.GetKey("right");
+            bool isDance = Input.GetKey("1");
+            bool isSillyDance = Input.GetKey("2");
+            bool isIdlePressed = !isWalkingForwardPressed && !isWalkingBackwardPressed;
 
-        //animations
-        animation_controller.SetBool("IsLeftTurn", isLeftTurn);
-        animation_controller.SetBool("IsRightTurn", isRightTurn);
-        animation_controller.SetBool("IsWalkingForward", isWalkingForwardPressed && velocity < 2.0f);
-        animation_controller.SetBool("IsRunningForward", isWalkingForwardPressed && velocity > 2.0f);
-        animation_controller.SetBool("IsWalkingBackward", isWalkingBackwardPressed);
-        animation_controller.SetBool("IsIdle", isIdlePressed);      
-        animation_controller.SetBool("IsDance", isDance);      
-        animation_controller.SetBool("IsSillyDance", isSillyDance);
+            //animations
+            animation_controller.SetBool("IsLeftTurn", isLeftTurn);
+            animation_controller.SetBool("IsRightTurn", isRightTurn);
+            animation_controller.SetBool("IsWalkingForward", isWalkingForwardPressed && velocity < 2.0f);
+            animation_controller.SetBool("IsRunningForward", isWalkingForwardPressed && velocity > 2.0f);
+            animation_controller.SetBool("IsWalkingBackward", isWalkingBackwardPressed);
+            animation_controller.SetBool("IsIdle", isIdlePressed);      
+            animation_controller.SetBool("IsDance", isDance);      
+            animation_controller.SetBool("IsSillyDance", isSillyDance);
 
-        //speed based on animation
-        if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingForward")) {
-            if (velocity <= top_speed) {
-                velocity += (top_speed) / interval;
-            } else {
+            //speed based on animation
+            if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingForward")) {
+                if (velocity <= top_speed) {
+                    velocity += (top_speed) / interval;
+                } else {
+                    velocity = top_speed;
+                }
+            }  else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingBackward")) {
+                if (velocity * -1.0f >= top_speed) {
+                    velocity = -top_speed;
+                } else {
+                    velocity -= (top_speed) / interval;
+                }         
+            } else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("RunningForward")) {
                 velocity = top_speed;
-            }
-        }  else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("WalkingBackward")) {
-            if (velocity * -1.0f >= top_speed) {
-                velocity = -top_speed;
             } else {
-                velocity -= (top_speed) / interval;
-            }         
-        } else if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("RunningForward")) {
-            velocity = top_speed;
-        } else {
-            velocity = 0.0f;
-        }
-            float turn = Input.GetAxis("Horizontal");
-            transform.Rotate(0, turn * 100f * Time.deltaTime, 0);
-        
-        float xdirection = Mathf.Sin(Mathf.Deg2Rad * transform.rotation.eulerAngles.y);
-        float zdirection = Mathf.Cos(Mathf.Deg2Rad * transform.rotation.eulerAngles.y);
-        movement_direction = new Vector3(xdirection, 0.0f, zdirection);
-
-
-        if (transform.position.y > 0.0f) // if the character starts "climbing" the terrain, drop her down
-        {
-            Vector3 lower_character = movement_direction * velocity * Time.deltaTime;
-            lower_character.y = -100.0f; // hack to force her down
-            character_controller.Move(lower_character);
-        }
-        else 
-        {   
-            if (transform.position.z <= 0 || transform.position.z >= level.length * 2) {
-                movement_direction.z = 0.5f;
+                velocity = 0.0f;
             }
-
-
+                float turn = Input.GetAxis("Horizontal");
+                transform.Rotate(0, turn * 100f * Time.deltaTime, 0);
             
-            character_controller.Move(movement_direction * velocity * Time.deltaTime);
+            float xdirection = Mathf.Sin(Mathf.Deg2Rad * transform.rotation.eulerAngles.y);
+            float zdirection = Mathf.Cos(Mathf.Deg2Rad * transform.rotation.eulerAngles.y);
+            movement_direction = new Vector3(xdirection, 0.0f, zdirection);
 
+
+            if (transform.position.y > 0.0f) // if the character starts "climbing" the terrain, drop her down
+            {
+                Vector3 lower_character = movement_direction * velocity * Time.deltaTime;
+                lower_character.y = -100.0f; // hack to force her down
+                character_controller.Move(lower_character);
+            }
+            else 
+            {                   
+                character_controller.Move(movement_direction * velocity * Time.deltaTime);
+            }
+            
+        } else {
+            animation_controller.SetBool("IsLeftTurn", false);
+            animation_controller.SetBool("IsRightTurn", false);
+            animation_controller.SetBool("IsWalkingForward", false);
+            animation_controller.SetBool("IsRunningForward", false);
+            animation_controller.SetBool("IsWalkingBackward", false);
+            animation_controller.SetBool("IsIdle", false);      
+            animation_controller.SetBool("IsDance", false);      
+            animation_controller.SetBool("IsSillyDance", false);
         }
+        
     }
 
     public void PlayWalkSound()

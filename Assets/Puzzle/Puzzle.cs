@@ -100,7 +100,7 @@ public class Puzzle : MonoBehaviour
             _audioSource.clip = failedSound;
             _audioSource.Play();
             called = true;
-            GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().healthpoint -= 20;
+            GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().healthpoint -= 5;
             GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().health_bar.SetActive(true);
         }
     }

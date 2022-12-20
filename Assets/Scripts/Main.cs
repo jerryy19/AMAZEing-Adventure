@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
@@ -17,6 +16,7 @@ public class Main : MonoBehaviour
     GameObject playerObj;
     public int solvedPuzzles = 0;
     public Level level;
+
     
     [SerializeField]
     private List<GameObject> wallList = new List<GameObject>();
@@ -108,6 +108,16 @@ public class Main : MonoBehaviour
         Vector3 playerPos = new Vector3(level.playerStart.x * 2, 0, level.playerStart.y * 2);
         playerObj = Instantiate(playerPrefab, playerPos, Quaternion.identity);
 
+        GameObject winBlock = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        winBlock.transform.localScale = new Vector3(0.2f, 1.0f, 0.2f);
+        winBlock.transform.position = new Vector3(level.playerGoal.x * 2, -0.05f, level.playerGoal.y * 2);
+        winBlock.name = "winBlock";
+        winBlock.transform.SetParent(transform, false);
+        winBlock.AddComponent<WinBlock>();
+        winBlock.AddComponent<AudioSource>();
+        winBlock.AddComponent<AudioSource>();
+        AudioClip winSound = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Sounds/Victory.wav", typeof(AudioClip));
+        winBlock.GetComponent<AudioSource>().clip = winSound;
 
     }
 
@@ -256,12 +266,6 @@ public class Main : MonoBehaviour
             }
         }
 
-        // win condition
-        if (solvedPuzzles == level.num_puzzles && checkWin()) {
-
-            Coroutine();
-        }
-
 
     }
 
@@ -269,7 +273,8 @@ public class Main : MonoBehaviour
     bool checkWin() {
         int x = (int)Mathf.Floor(playerObj.transform.position.x / 2);
         int z = (int)Mathf.Floor(playerObj.transform.position.z / 2);
-
+        Debug.Log(x + " " + z);
+        Debug.Log(level.playerGoal.x + " " + level.playerGoal.y);
         return level.playerGoal.x == x && level.playerGoal.y == z;
     }
     IEnumerator Coroutine() {

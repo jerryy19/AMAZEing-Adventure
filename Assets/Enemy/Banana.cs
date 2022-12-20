@@ -38,7 +38,7 @@ public class Banana : MonoBehaviour
             hitCounter++;
             audioSource.Play();
             BigVegas player = GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>();
-            player.healthpoint -= 10;
+            player.healthpoint -= 5;
         }
     }
 }
