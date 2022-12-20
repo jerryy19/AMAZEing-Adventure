@@ -36,7 +36,8 @@ Liam Brandwein
 - Robot FSM
 - Robot functionality
 - SFX
-- Blue mystery tile
+- Blue mystery tile (Mystery.cs)
+- WinBlock.cs
 
 Jia Hui Yu
 - Most of Main.cs
