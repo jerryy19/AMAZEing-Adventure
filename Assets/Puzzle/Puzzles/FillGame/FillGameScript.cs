@@ -247,7 +247,7 @@ public class FillGameScript : MonoBehaviour
         }
 
         if (i == 0) {
-            done = true;
+            gameObject.SetActive(false);
             GameObject.Find("BigVegas(Clone)").GetComponent<BigVegas>().health_bar.SetActive(true);
         }
     }
