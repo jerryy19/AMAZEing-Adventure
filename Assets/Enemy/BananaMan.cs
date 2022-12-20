@@ -74,15 +74,7 @@ public class BananaMan : MonoBehaviour
             Vector3 bananaPos = hand.position;
             Quaternion bananaRot = Quaternion.identity;
             GameObject thrownBanana = (GameObject)GameObject.Instantiate(banana, bananaPos, transform.rotation);
-            // Vector3 direction_banana_to_player = player.GetComponent<CapsuleCollider>().bounds.center - thrownBanana.GetComponent<CapsuleCollider>().bounds.center;
-            // direction_banana_to_player.Normalize();
-            // Vector3 direction_to_shoot = PredictShootingDirection(direction_banana_to_player,
-            //     thrownBanana.GetComponent<CapsuleCollider>().bounds.center);
-            //
-            // thrownBanana.GetComponent<Rigidbody>().AddForce(
-            //     new Vector3(direction_to_shoot.x * bananaSpeed, Math.Abs(direction_to_shoot.y), direction_to_shoot.z * bananaSpeed)
-            //     );
-
+            
             Vector3 playerPos = player.GetComponent<CapsuleCollider>().bounds.center;
 
             Vector3 force = PredictRequiredRigidbodyForce(bananaPos, playerPos, 30f);
