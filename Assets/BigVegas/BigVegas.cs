@@ -47,7 +47,6 @@ public class BigVegas : MonoBehaviour
         settings.SetActive(false);
         pause.SetActive(false);
         guide.SetActive(false);
-        Debug.Log(level);
         audioSource = GetComponent<AudioSource>();
     }
 
