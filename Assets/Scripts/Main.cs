@@ -259,7 +259,7 @@ public class Main : MonoBehaviour
         // win condition
         if (solvedPuzzles == level.num_puzzles && checkWin()) {
 
-            SceneManager.LoadScene("StartGame");
+            Coroutine();
         }
 
 
@@ -271,6 +271,12 @@ public class Main : MonoBehaviour
         int z = (int)Mathf.Floor(playerObj.transform.position.z / 2);
 
         return level.playerGoal.x == x && level.playerGoal.y == z;
+    }
+    IEnumerator Coroutine() {
+
+
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("StartGame");
     }
 
 }
