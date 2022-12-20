@@ -72,15 +72,25 @@ public class BananaMan : MonoBehaviour
     {
         if (GameObject.Find("healthbar") != null) {
             Vector3 bananaPos = hand.position;
-            Quaternion bananaRot = hand.rotation;
+            Quaternion bananaRot = Quaternion.identity;
             GameObject thrownBanana = (GameObject)GameObject.Instantiate(banana, bananaPos, transform.rotation);
-            Vector3 direction_banana_to_player = player.GetComponent<CapsuleCollider>().bounds.center - thrownBanana.GetComponent<CapsuleCollider>().bounds.center;
-            direction_banana_to_player.Normalize();
-            Vector3 direction_to_shoot = PredictShootingDirection(direction_banana_to_player,
-                thrownBanana.GetComponent<CapsuleCollider>().bounds.center);
-            thrownBanana.GetComponent<Rigidbody>().AddForce(
-                new Vector3(direction_to_shoot.x * bananaSpeed, Math.Abs(direction_to_shoot.y), direction_to_shoot.z * bananaSpeed)
-                );
+            // Vector3 direction_banana_to_player = player.GetComponent<CapsuleCollider>().bounds.center - thrownBanana.GetComponent<CapsuleCollider>().bounds.center;
+            // direction_banana_to_player.Normalize();
+            // Vector3 direction_to_shoot = PredictShootingDirection(direction_banana_to_player,
+            //     thrownBanana.GetComponent<CapsuleCollider>().bounds.center);
+            //
+            // thrownBanana.GetComponent<Rigidbody>().AddForce(
+            //     new Vector3(direction_to_shoot.x * bananaSpeed, Math.Abs(direction_to_shoot.y), direction_to_shoot.z * bananaSpeed)
+            //     );
+
+            Vector3 playerPos = player.GetComponent<CapsuleCollider>().bounds.center;
+
+            Vector3 force = PredictRequiredRigidbodyForce(bananaPos, playerPos, 30f);
+
+            Rigidbody bRigidbody = thrownBanana.GetComponent<Rigidbody>();
+            
+            bRigidbody.AddForce(force * bRigidbody.mass, ForceMode.Impulse);
+
             audioSource.Play();
         }
 
@@ -135,6 +145,31 @@ public class BananaMan : MonoBehaviour
         }
 
         return shooting_direction;
+    }
+
+    private Vector3 PredictRequiredRigidbodyForce(Vector3 start, Vector3 target, float startingAngle)
+    {
+        float gravity = Physics.gravity.magnitude;
+
+        float angle = startingAngle * Mathf.Deg2Rad;
+
+        Vector3 planarStart = new Vector3(start.x, 0, start.z);
+        Vector3 planarTarget = new Vector3(target.x, 0, target.z);
+
+        float distance = Vector3.Distance(planarStart, planarTarget);
+
+        float yDistance = start.y - target.y;
+
+        float initialVelocity = (1 / Mathf.Cos(angle)) * Mathf.Sqrt((0.5f * gravity * Mathf.Pow(distance, 2))
+                                / (distance * Mathf.Tan(angle) + yDistance));
+
+        Vector3 velocity = new Vector3(0, initialVelocity * Mathf.Sin(angle), initialVelocity * Mathf.Cos(angle));
+
+        float angleBetweenObjects = Vector3.Angle(Vector3.forward, planarTarget - planarStart) * (target.x > transform.position.x ? 1 : -1);
+        
+        Vector3 finalVelocity = Quaternion.AngleAxis(angleBetweenObjects, Vector3.up) * velocity;
+        
+        return finalVelocity;
     }
     
     IEnumerator ThrowingSequence()
