@@ -1,6 +1,5 @@
 # AMAZEing-Adventure
-CS576 Game Programming Project @UMass Amherst
-
+[CS576 Game Programming Project](https://github.com/jerryy19/AMAZEing-Adventure) @UMass Amherst
 
 ## Game Description
 The purpose of this game is to find a way out of the map but the puzzles need
