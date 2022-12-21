@@ -36,7 +36,8 @@ Liam Brandwein
 - Robot FSM
 - Robot functionality
 - SFX
-- Blue mystery tile
+- Blue mystery tile (Mystery.cs)
+- WinBlock.cs
 
 Jia Hui Yu
 - Most of Main.cs
@@ -67,4 +68,5 @@ Alan Zheng
 - Timer script is adapted from https://www.youtube.com/watch?v=3ZfwqWl-YI0
 - Big vegas model is from https://www.mixamo.com/#/?page=1&query=big&type=Character
 - Healthbar asset is inspired by https://www.youtube.com/watch?v=BLfNP4Sc_iA
+- Banana Man asset is from https://assetstore.unity.com/packages/3d/characters/humanoids/banana-man-196830
 

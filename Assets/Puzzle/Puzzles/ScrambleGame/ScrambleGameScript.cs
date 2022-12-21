@@ -10,7 +10,10 @@ public class ScrambleGameScript : MonoBehaviour
     public GameObject letterPrefab;
 
     List<GameObject> userPressedLetters = new List<GameObject>();   // ui for the letter boxes
-    List<string> words = new List<string>();                        // our word bank
+    List<string> words = new List<string>();                        // our word bank to use
+
+    // bigger list of 4 letter words, this list is used just in case user enters a word that exist but not in the smaller words list
+    List<string> validateWords = new List<string>();
 
     private Timer timer;
     string theWord;
@@ -40,6 +43,13 @@ public class ScrambleGameScript : MonoBehaviour
             string s = "";
             while ((s = sr.ReadLine()) != null) {
                 words.Add(s.ToUpper());
+            }
+        }
+        
+        using (StreamReader sr = File.OpenText("./Assets/Puzzle/Puzzles/validateWords.txt")) {
+            string s = "";
+            while ((s = sr.ReadLine()) != null) {
+                validateWords.Add(s.ToUpper());
             }
         }
 
@@ -196,6 +206,8 @@ public class ScrambleGameScript : MonoBehaviour
                     if (playerWord == theWord) {
                         success = true;
                     } else {
+                        // check the bigger list to see if it is a real word
+                        if (!validateWords.Contains(playerWord)) return;
                         StartCoroutine(Flash());
                         tries--;
                         triesObj.transform.GetChild(0).gameObject.GetComponent<Text>().text = $"{tries}";

@@ -12,7 +12,7 @@ public class TypingGameScript : MonoBehaviour
     int index = 0;
     int correctLetters = 0;
     int num_words = 0;
-    List<string> words = new List<string>();        // our word bank
+    List<string> words = new List<string>();        // our word bank to use --> uses the bigger list of words
 
     private Timer timer;
     float time = 10.0f;
@@ -38,7 +38,7 @@ public class TypingGameScript : MonoBehaviour
         elapsedTime = time;
         timer = GetComponent<Timer>();
 
-        using (StreamReader sr = File.OpenText("./Assets/Puzzle/Puzzles/wordBank.txt")) {
+        using (StreamReader sr = File.OpenText("./Assets/Puzzle/Puzzles/validateWords.txt")) {
             string s = "";
             while ((s = sr.ReadLine()) != null) {
                 words.Add(s.ToUpper());

@@ -9,10 +9,10 @@ public class WordMemoryGameScript : MonoBehaviour
    
    public GameObject letterPrefab;
 
-    List<string> words = new List<string>();                    // our word bank
+    List<string> words = new List<string>();                    // our word bank to use --> uses the bigger list of words
     List<GameObject>[] wordInRow = new List<GameObject>[5];     // letter outline ui
     List<string> toRemember = new List<string>();               // words to remember for player
-    List<string> toRememberTemp = new List<string>();               // words to remember for player
+    List<string> toRememberTemp = new List<string>();           // words to remember for player
     int numWords;      // choose this many words to memorize
 
     private Timer timer;
@@ -43,7 +43,7 @@ public class WordMemoryGameScript : MonoBehaviour
         elapsedTime = time;
         timer = GetComponent<Timer>();
 
-        using (StreamReader sr = File.OpenText("./Assets/Puzzle/Puzzles/wordBank.txt")) {
+        using (StreamReader sr = File.OpenText("./Assets/Puzzle/Puzzles/validateWords.txt")) {
             string s = "";
             while ((s = sr.ReadLine()) != null) {
                 words.Add(s.ToUpper());
