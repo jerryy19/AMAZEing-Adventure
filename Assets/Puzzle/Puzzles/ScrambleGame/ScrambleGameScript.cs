@@ -206,8 +206,6 @@ public class ScrambleGameScript : MonoBehaviour
                     if (playerWord == theWord) {
                         success = true;
                     } else {
-                        // check the bigger list to see if it is a real word
-                        if (!validateWords.Contains(playerWord)) return;
                         StartCoroutine(Flash());
                         tries--;
                         triesObj.transform.GetChild(0).gameObject.GetComponent<Text>().text = $"{tries}";
